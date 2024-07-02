@@ -3,9 +3,8 @@ using API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace API.Controllers;
-[ApiController]
-[Route("api/[controller]")]
-public class UsersController(DataContext context) : ControllerBase
+
+public class UsersController(DataContext context) : BaseApiController
 {
 
   
@@ -27,5 +26,7 @@ public class UsersController(DataContext context) : ControllerBase
         return NotFound();
 
     }
+
+    
 
 }

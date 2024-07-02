@@ -1,9 +1,15 @@
+using API;
 using API.Data;
+using API.Interfaces;
+using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors();
+builder.Services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
+        .AddCertificate();
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<DataContext>(opt => 
@@ -12,10 +18,12 @@ builder.Services.AddDbContext<DataContext>(opt =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
+builder.Services.AddScoped<ITokenService,TokenService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
+app.UseAuthentication();
 app.MapControllers();
 
 app.Run();
