@@ -13,6 +13,9 @@ import { HomeComponent } from "./home/home.component";
     imports: [RouterOutlet, NgFor, NavComponent, HomeComponent]
 })
 export class AppComponent implements OnInit{
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
   
   
   private accountService = inject(AccountsService);
