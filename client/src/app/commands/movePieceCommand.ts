@@ -1,5 +1,5 @@
 import { Chessgame } from "../chessgame/chessgame";
-
+import {Command} from "../commands/command"
 
 export class MovePieceCommand implements Command{
     private chessGame: Chessgame;

@@ -42,8 +42,8 @@ export class Chessgame {
     }
 
     movePiece(to:number, from: number){
-      var piece = this.getpiece(from);
-      var colour  = this.getPieceColour(from)
+      var piece = this.getpiece(from, this.boardStateColours[from]);
+      var colour  = this.getPieceColour(from, this.boardStateColours[from])
       if (piece == 'empty') return false;
         switch(piece){
           case(Piece.pawn):{
