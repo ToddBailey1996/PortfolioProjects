@@ -5,6 +5,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { authGuard } from './_guards/auth.guard';
+import { ChessgameComponent } from './chessgame/chessgame.component';
 
 export const routes: Routes = [
 
@@ -17,7 +18,8 @@ export const routes: Routes = [
             {path: 'members', component: MemberListComponent},
             {path: 'members/:id', component: MemberDetailComponent},
             {path: 'lists', component: ListsComponent},
-            {path: 'messages', component: MessagesComponent}
+            {path: 'messages', component: MessagesComponent},
+            {path: 'chess', component: ChessgameComponent}
         ]
     },
    
