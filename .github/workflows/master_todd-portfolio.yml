@@ -92,12 +92,13 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_16BC7C445BBF45DCA6259DEB7E2B942B }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8F006D3FD20149A7B4EE047E0BFB5F0C }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BEC55C1C4CD847D8A0D69082AACEE1C4 }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'Todd-Portfolio'
           package: './publish'
+
