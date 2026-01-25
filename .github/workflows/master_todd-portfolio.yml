@@ -21,7 +21,7 @@ jobs:
           node-version: '20'
 
       - name: Install and build Angular client
-        working-directory: ./ProjectDemoWebsite/client
+        working-directory: ./client
         run: |
           npm ci
           npm run build -- --configuration production
@@ -40,7 +40,7 @@ jobs:
           echo "Inspecting $CLIENT_DIST_BASE"
           if [ ! -d "$CLIENT_DIST_BASE" ]; then
             echo "ERROR: Angular dist directory not found at $CLIENT_DIST_BASE"
-            ls -la ./ProjectDemoWebsite/client || true
+            ls -la ./client || true
             exit 1
           fi
 
@@ -101,5 +101,6 @@ jobs:
         with:
           app-name: 'Todd-Portfolio'
           package: './publish'
+
 
 
