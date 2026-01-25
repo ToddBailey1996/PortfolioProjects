@@ -111,7 +111,8 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'Todd-Portfolio'
-          package: './publish'
+          package: './publish/**'
+
 
 
 
