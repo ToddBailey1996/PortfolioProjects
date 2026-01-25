@@ -1,0 +1,21 @@
+
+
+<form *ngIf="showForm" [formGroup]="form" (ngSubmit)="submit()">
+    <p>Configure Game</p>
+    <label>
+        Gender:
+        <input type="radio" value="computer" formControlName="player"> Computer
+        <input type="radio" value="human" formControlName="player"> Human
+    </label><br>
+    <label>
+        Seach Depth:
+        <input type="number" name="searchDepth" min="1" max="10" value="2">
+    </label><br>
+    <button type="submit" [disabled]="form.invalid">
+        Create Game
+    </button>
+</form>
+
+<ng-container *ngIf="!showForm">
+  <ng-container *ngComponentOutlet="current"></ng-container>
+</ng-container>
