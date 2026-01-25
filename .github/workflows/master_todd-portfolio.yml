@@ -35,7 +35,7 @@ jobs:
       # 3) Copy Angular build into API wwwroot (robust handling of dist layout)
       - name: Copy Angular build into API wwwroot
         run: |
-          API_PROJECT_PATH="./ProjectDemoWebsite/api"
+          API_PROJECT_PATH="./ProjectDemoWebsite/API"
           CLIENT_DIST_BASE="./client/dist"
           echo "Inspecting $CLIENT_DIST_BASE"
           if [ ! -d "$CLIENT_DIST_BASE" ]; then
@@ -78,7 +78,7 @@ jobs:
       # 4) Publish .NET app (auto-detect csproj inside API_PROJECT_PATH)
       - name: Publish .NET app
         run: |
-          API_PROJECT_PATH="./ProjectDemoWebsite/api"
+          API_PROJECT_PATH="./ProjectDemoWebsite/API"
           CSPROJ=$(ls "$API_PROJECT_PATH"/*.csproj 2>/dev/null | head -n 1)
           if [ -z "$CSPROJ" ]; then
             echo "ERROR: No .csproj found in $API_PROJECT_PATH"
@@ -101,6 +101,7 @@ jobs:
         with:
           app-name: 'Todd-Portfolio'
           package: './publish'
+
 
 
 
