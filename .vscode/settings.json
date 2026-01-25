@@ -4,5 +4,6 @@
         ".vscode{,/**}"
     ],
     "appService.defaultWebAppToDeploy": "/subscriptions/0062d94a-46d9-401e-aba8-a1506deb119a/resourceGroups/Todd-bailey-portfolio_group/providers/Microsoft.Web/sites/Todd-Portfolio",
-    "appService.deploySubpath": "client\\dist"
+    "appService.deploySubpath": "client\\dist",
+    "dotnet.defaultSolution": "ProjectDemoWebsite.sln"
 }
