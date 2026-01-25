@@ -13,7 +13,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: DEBUG – show repo structure
+        run: |
+          echo "===== ROOT ====="
+            ls -la
 
+            echo "===== ProjectDemoWebsite ====="
+            ls -la ProjectDemoWebsite || true
+
+            echo "===== find csproj ====="
+            find . -name "*.csproj"
       # 1) Build Angular
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -101,6 +110,7 @@ jobs:
         with:
           app-name: 'Todd-Portfolio'
           package: './publish'
+
 
 
 
