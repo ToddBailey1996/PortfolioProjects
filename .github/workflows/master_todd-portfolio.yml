@@ -78,7 +78,7 @@ jobs:
       # 4) Publish .NET app (auto-detect csproj inside API_PROJECT_PATH)
       - name: Publish .NET app
         run: |
-          API_PROJECT_PATH="./api"
+          API_PROJECT_PATH="./ProjectDemoWebsite/api"
           CSPROJ=$(ls "$API_PROJECT_PATH"/*.csproj 2>/dev/null | head -n 1)
           if [ -z "$CSPROJ" ]; then
             echo "ERROR: No .csproj found in $API_PROJECT_PATH"
@@ -101,6 +101,7 @@ jobs:
         with:
           app-name: 'Todd-Portfolio'
           package: './publish'
+
 
 
 
