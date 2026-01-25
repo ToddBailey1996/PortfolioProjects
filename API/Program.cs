@@ -25,5 +25,7 @@ app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localho
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
+app.UseStaticFiles(); // <-- Ensures files from 'wwwroot' are served
+// ... other code ...
+app.MapFallbackToFile("index.html"); 
 app.Run();
