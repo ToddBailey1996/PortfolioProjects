@@ -43,42 +43,19 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      # 3) Copy Angular build into API wwwroot (robust handling of dist layout)
+      # 3) Copy Angular build into API wwwroot (FIXED PATH)
       - name: Copy Angular build into API wwwroot
         run: |
           API_PROJECT_PATH="./API"
-          CLIENT_DIST_BASE="./client/dist"
-          echo "Inspecting $CLIENT_DIST_BASE"
-          if [ ! -d "$CLIENT_DIST_BASE" ]; then
-            echo "ERROR: Angular dist directory not found at $CLIENT_DIST_BASE"
-            ls -la ./client || true
-            exit 1
-          fi
-
-          # Prefer the exact folder dist/client (from angular.json). If not present, pick a sensible fallback.
-          if [ -d "$CLIENT_DIST_BASE/client" ]; then
-            SRC="$CLIENT_DIST_BASE/client"
-          else
-            # If dist contains files directly (no subfolder), use that
-            if [ "$(ls -A $CLIENT_DIST_BASE)" ]; then
-              # If there are files (index.html etc.) right inside dist, use dist itself
-              if ls "$CLIENT_DIST_BASE" | grep -q "index.html"; then
-                SRC="$CLIENT_DIST_BASE"
-              else
-                # Otherwise pick the first subdirectory inside dist
-                FIRST_SUBDIR=$(find "$CLIENT_DIST_BASE" -maxdepth 1 -mindepth 1 -type d | head -n 1)
-                if [ -n "$FIRST_SUBDIR" ]; then
-                  SRC="$FIRST_SUBDIR"
-                else
-                  echo "ERROR: Could not find built client files under $CLIENT_DIST_BASE"
-                  ls -la "$CLIENT_DIST_BASE"
-                  exit 1
-                fi
-              fi
-            fi
-          fi
+          # Point directly to where index.html and assets are located
+          SRC="./client/dist/client/browser" 
 
           echo "Copying client build from $SRC to $API_PROJECT_PATH/wwwroot"
+          if [ ! -d "$SRC" ]; then
+            echo "ERROR: Angular browser directory not found at $SRC"
+            exit 1
+          fi
+          
           rm -rf "$API_PROJECT_PATH/wwwroot" || true
           mkdir -p "$API_PROJECT_PATH/wwwroot"
           cp -r "$SRC/"* "$API_PROJECT_PATH/wwwroot/"
@@ -112,16 +89,3 @@ jobs:
         with:
           app-name: 'Todd-Portfolio'
           package: './publish'
-
-
-
-
-
-
-
-
-
-
-
-
-
