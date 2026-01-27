@@ -8,7 +8,8 @@ import { map } from 'rxjs';
 export class AccountsService {
 
   private http = inject(HttpClient);
-  baseUrl = 'https://localhost:5001/api/';
+  //baseUrl = 'https://localhost:5001/api/';
+  baseUrl = 'https://toddportfolio-e6dmbnaag3gcc6fz.westeurope-01.azurewebsites.net/api/'; 
   currentUser = signal<User | null>(null);
   login(model: any){
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
