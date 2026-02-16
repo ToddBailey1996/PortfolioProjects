@@ -22,14 +22,14 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseStaticFiles(); // <-- Ensures files from 'wwwroot' are served
 // ... other code ...
 app.MapFallbackToFile("index.html"); 
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.UseSwagger();
-app.UseSwaggerUI();
+
 
 app.Run();

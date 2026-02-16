@@ -9,7 +9,8 @@
     </label><br>
     <label>
         Seach Depth:
-        <input type="number" name="searchDepth" min="1" max="10" value="2">
+        <!--<input type="number" name="searchDepth" min="1" max="10" value="2">-->
+        <input type="number" formControlName="searchDepth" min="1" max="10">
     </label><br>
     <button type="submit" [disabled]="form.invalid">
         Create Game
@@ -19,3 +20,7 @@
 <ng-container *ngIf="!showForm">
   <ng-container *ngComponentOutlet="current"></ng-container>
 </ng-container>
+
+<ul class="tag-list">
+  <li *ngFor="let tech of techStackList" class="tag">{{ tech }}</li>
+</ul>

@@ -3,13 +3,13 @@ import { Observable, of, switchMap } from 'rxjs';
 import { ChessMove, MyChessAIQueryParams, MyChessAIResponse} from './models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FENChar } from '../chess-logic/models';
-
+import { environment } from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class MychessAIService {
 
-  private readonly engine: string = "https://chessengine-e2hhe2gcajgpgahs.westeurope-01.azurewebsites.net/api/engine";
+  private readonly engine: string = environment.chessApiBase + '/api/engine';
   
   constructor(private http: HttpClient) { }
 

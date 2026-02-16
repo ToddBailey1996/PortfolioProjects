@@ -1,0 +1,66 @@
+<h1>User CRUD</h1>
+
+  <!-- CREATE / UPDATE FORM -->
+  <h2>Create / Update User</h2>
+
+  <input type="hidden" id="userId" />
+
+  <label>Username</label>
+  <input type="text" id="username" placeholder="Enter username" />
+
+
+  <br /><br />
+
+  <button (click)="createUser()">Create</button>
+ <!-- <button (click)="clearForm()">Clear</button>-->
+
+  <!-- USERS TABLE -->
+  <h2>Users List</h2>
+  <button (click)="getusers()">Refresh Users</button>
+
+  <table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Active</th>
+      <th>Created Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of Users">
+      <td>{{ user.id }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.isActive }}</td>
+      <td>{{ user.createdDate | date:'medium' }}</td>
+      <td>
+        <button (click)="editUser(user)">edit</button>
+
+        <button (click)="deleteUser(user.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+  <div class="modal" *ngIf="isModalOpen">
+     <div class="modal-content" *ngIf="selectedUser">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Edit User</h2>
+        <label>Username</label> 
+        <input type="text" [(ngModel)]="selectedUser.username" placeholder="Enter username" />
+        <label>Is Active</label>
+        <input type="checkbox" [(ngModel)]="selectedUser.isActive" />
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" [(ngModel)]="newPassword" placeholder="Enter new password" />
+          <label>Confirm Password</label>
+          <input type="password" [(ngModel)]="confirmPassword" placeholder="Confirm new password" />
+          <button (click)="changePassword(selectedUser)">Change Password</button>
+        </div>
+      
+      <button (click)="confirmAction()">{{ isEditMode ? 'Update' : 'Create' }}</button>
+    </div>
+  </div>
+  </div>

@@ -1,0 +1,25 @@
+
+.tag-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background-color: #e0f7fa;
+  color: #00796b;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  display: inline-block;
+  transition: background-color 0.2s;
+}
+
+.tag:hover {
+  background-color: #b2ebf2;
+}

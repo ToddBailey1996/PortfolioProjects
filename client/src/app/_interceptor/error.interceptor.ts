@@ -26,7 +26,9 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             }
             break;
           case 401:
-            toastr.error('Unauthorised',error.status);
+            toastr.error('Unauthorized', error.status);
+            localStorage.removeItem('user'); // log out
+            router.navigateByUrl('/login');
             break;
           case 404:
             router.navigateByUrl('/not-found');
