@@ -1,6 +1,7 @@
 using System.Text;
 using API;
 using API.Data;
+using API.Entities;
 using API.Extensions;
 using API.Interfaces;
 using Microsoft.AspNetCore.Authentication.Certificate;
@@ -22,14 +23,36 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseStaticFiles(); // <-- Ensures files from 'wwwroot' are served
 // ... other code ...
 app.MapFallbackToFile("index.html"); 
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.UseSwagger();
-app.UseSwaggerUI();
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppContext>();
+    context.Database.Migrate(); // Ensures database exists and tables are created
+
+    if (!context.Users.Any(u => u.UserName == "admin"))
+    {
+        byte[] hash, salt;
+        PasswordHelper.CreatePasswordHash("Password01", out hash, out salt);
+
+        var admin = new AppUser
+        {
+            UserName = "admin",
+            PasswordHash = hash,
+            PasswordSalt = salt,
+            IsActive = true,
+            CreatedDate = DateTime.UtcNow
+        };
+
+        context.Users.Add(admin);
+        context.SaveChanges();
+    }
+}
 
 app.Run();

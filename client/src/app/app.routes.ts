@@ -11,7 +11,7 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { ChessboardComponent} from '../lib/chess/board-component/board-component.component';
 import { ChessHostComponent } from '../lib/chess/chess-host/chess-host.component';
-
+import { AdminComponent } from '../app/admin/admin.component';
 
 export const routes: Routes = [
 
@@ -25,13 +25,15 @@ export const routes: Routes = [
             {path: 'members/:id', component: MemberDetailComponent},
             {path: 'lists', component: ListsComponent},
             {path: 'messages', component: MessagesComponent},
-            {path: 'chess', component: ChessHostComponent}
+            {path: 'chess', component: ChessHostComponent},
+            {path: 'admin', component: AdminComponent},
+            {path: 'home', component: HomeComponent }
         ]
     },
    {path: 'errors', component: TestErrorsComponent },
-   {path: 'not-found', component: NotFoundComponent },
+   //{path: 'not-found', component: NotFoundComponent },
    {path: 'server-error', component: ServerErrorComponent },
-    {path: '**', component: ListsComponent, pathMatch: 'full'}
+    {path: '**', component: HomeComponent, pathMatch: 'full'}
 
 
 ];

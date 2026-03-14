@@ -1,6 +1,12 @@
 <div class="container mt-5">
     <div style="text-align:center">
-        @if(!registerMode){
+        <h1>Hi, I am Todd and welcome to my portfolio!</h1>
+        <p>
+            This site showcases a selection of projects I’ve built to strengthen my skills and explore new technologies.
+Each project highlights the tools and technologies used, along with a detailed overview, relevant links, and usage instructions where applicable.
+Feel free to explore and learn more about my work.
+        </p>
+       <!-- @if(!registerMode){
             <h1>Hello User</h1>
             <p class="lead">Welcome to my portfolio site!</p>
             <div class="text-center">
@@ -18,7 +24,28 @@
                         ></app-register>
                     </div>
                 </div>
+                
             </div>
-        }
+        }-->
     </div>
+<div class="panel-list">
+  <div class="panel" *ngFor="let project of visibleProjects">
+    <button class="btn btn-info btn-lg me-2" (click)="OpenModal(project)">About</button>
+    <ng-container *ngComponentOutlet="project.component"></ng-container>
+    <ul class="tag-list">
+        <li *ngFor="let tech of project.techList.split(',')" class="tag">{{ tech }}</li>
+    </ul>
+  </div>
+</div>
+ <div class="modal" *ngIf="isModalOpen">
+    <div class="modal-content">
+        <div class="modal-content">
+            <span class="close" (click)="closeModal()">&times;</span>
+            <h2>About Project</h2>
+            <h3>{{ selectedProject.title }}</h3>
+            <p>{{ selectedProject.description }}</p>
+
+        </div>
+    </div>
+ </div>   
 </div>

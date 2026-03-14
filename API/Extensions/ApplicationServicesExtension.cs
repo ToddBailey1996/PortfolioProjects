@@ -1,7 +1,6 @@
 ﻿using API.Data;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
 namespace API.Extensions;
 
 public static class ApplicationServicesExtension
@@ -10,14 +9,16 @@ public static class ApplicationServicesExtension
     {
         services.AddCors();
         services.AddControllers();
-        services.AddDbContext<DataContext>(opt => 
-        {
-            opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+        var cs = config.GetConnectionString("DefaultConnection");
+        services.AddDbContext<AppContext>(opt =>
+{
+            // This looks for the "DefaultConnection" key in your JSON
+            opt.UseSqlServer(cs);
         });
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddScoped<ITokenService,TokenService>();
-
+        Console.WriteLine("CONNECTION STRING = " + cs);
         return services;
     }
 }

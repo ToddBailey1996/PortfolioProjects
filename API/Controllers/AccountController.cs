@@ -7,10 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 
+
 namespace API.Controllers;
 
 
-public class AccountController(DataContext context, ITokenService tokenService) : BaseApiController
+public class AccountController(AppContext context, ITokenService tokenService) : BaseApiController
 {
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto){
@@ -41,6 +42,7 @@ public class AccountController(DataContext context, ITokenService tokenService) 
         [HttpPost("Login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
+            
             var user = await context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
             if(user == null) return Unauthorized("invalid username");
 

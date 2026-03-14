@@ -6,15 +6,17 @@ import { ComputerModeComponent } from '../computer-mode/computer-mode.component'
 import { FormBuilder, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
+import { BaseComponent } from '../../../app/base/base.component';
 
 @Component({
   selector: 'app-chess-host',
   standalone: true,
   // include both standalone child components here so Angular can create them
-  imports: [CommonModule,ChessboardComponent, ComputerModeComponent,ReactiveFormsModule,],
+  imports: [CommonModule,ChessboardComponent, ComputerModeComponent,ReactiveFormsModule],
   templateUrl: './chess-host.component.html',
+  styleUrls: ['./chess-host.component.css']
 })
-export class ChessHostComponent {
+export class ChessHostComponent extends BaseComponent {
   // expose the Types as public properties so the template can reference them
   public chessComp: Type<any> = ChessboardComponent;
   public computerComp: Type<any> = ComputerModeComponent;
@@ -28,13 +30,20 @@ export class ChessHostComponent {
 
   // current component to render
   public current!: Type<any>;
-
+  public currentFEN: string = '';
+  get outletInputs() {
+  return {
+    value: this.currentFEN
+  };
+}
   componentMap: Record<string, Type<any>> = {
     human: ChessboardComponent,
     computer: ComputerModeComponent,
   };
 
   constructor(private fb: FormBuilder) {
+    
+    super();
     this.current = this.componentMap['human'];
 
     this.form.get('player')!.valueChanges

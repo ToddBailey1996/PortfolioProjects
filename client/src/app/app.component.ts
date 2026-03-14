@@ -1,9 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NgFor } from '@angular/common';
 import { NavComponent } from "./nav/nav.component";
 import { AccountsService } from './_services/accounts.service';
-import { HomeComponent } from "./home/home.component";
 
 
 @Component({
@@ -11,7 +9,7 @@ import { HomeComponent } from "./home/home.component";
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, NgFor, NavComponent, HomeComponent]
+    imports: [RouterOutlet, NavComponent]
 })
 export class AppComponent implements OnInit{
   title(title: any) {

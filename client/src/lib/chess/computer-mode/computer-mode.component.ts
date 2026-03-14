@@ -43,6 +43,7 @@ export class ComputerModeComponent extends ChessboardComponent implements OnInit
         const {prevX,prevY,newX,newY,promotedPiece} = await firstValueFrom(this.myChessAIService.getBestMove(FEN));
         this.updateBoard(prevX,prevY,newX,newY,promotedPiece);
         this.chessBoardService.loadScoreFromApi(FEN);
+        //this.chessBoardService.loadScoreFromApi(this.chessBoard.boardAsFEN);
       }
     });
     this.computerSubscriptions$.add(chessBoardStateSubscription$);

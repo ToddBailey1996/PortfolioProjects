@@ -146,7 +146,7 @@ export class ChessBoard{
                     let newX: number = x+dx;
                     let newY: number = y+dy;
                     if(x === 1 && y === 3){
-                       console.log(x +"," + y);
+                       //console.log(x +"," + y);
                         //console.log(newX +"," + newY);
                     }
                     if(!this.CoordsValid(newX,newY)) continue;
@@ -206,7 +206,7 @@ export class ChessBoard{
                 
             }
         }
-        console.log(safeSquares);
+        //console.log(safeSquares);
         return safeSquares;
     }
 
@@ -295,6 +295,7 @@ export class ChessBoard{
             this.fullNumberOfMoves++;
         }
         this._boardAsFEN = this.FENConverter.convertBoardToFen(this.chessBoard, this._playerColor,this._lastMove,this.fiftyMoveRuleCounter,this.fullNumberOfMoves);
+        //this._boardAsFEN.emit(this._boardAsFEN);
         this.updateThreeFoldRepetitionDictionary(this._boardAsFEN);
         this._isGameOver = this.isGameFinished();
 

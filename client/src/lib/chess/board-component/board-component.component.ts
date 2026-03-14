@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Output, EventEmitter} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChessBoard } from '../chess-logic/chessBoard';
 import { CheckState, Color, Coords, FENChar, pieceImagePaths, SafeSquares, SelectedSquare, LastMove} from '../chess-logic/models';
@@ -27,7 +27,7 @@ export class ChessboardComponent  {
   public flipMode:boolean = false;
   public BoardEvaluation:number = 0;
 //promotion properties
-
+@Output() FENString = new EventEmitter<string>();
 public isPromotionActive: boolean = false;
 private promotionCoords : Coords|null = null;
 private promotedPiece: FENChar|null = null;
@@ -80,9 +80,9 @@ public promotionPieces(): FENChar[]{
     const isPawnSelected: boolean = this.selectedSquare.piece === FENChar.whitePawn || this.selectedSquare.piece === FENChar.blackPawn;
     const isPawnOnLastRank: boolean = isPawnSelected &&  (newX === 7 || newX === 0);
     const shouldOpenPromotionDialog: boolean = !this.isPromotionActive && isPawnOnLastRank;
-    console.log(this.isPromotionActive);
+    /*console.log(this.isPromotionActive);
     console.log(isPawnOnLastRank);
-    console.log(shouldOpenPromotionDialog);
+    console.log(shouldOpenPromotionDialog);*/
     if(shouldOpenPromotionDialog){
       this.pieceSafeSquares = [];
       this.isPromotionActive = true; 
@@ -93,11 +93,13 @@ public promotionPieces(): FENChar[]{
     const {x: prevX,y:prevY} = this.selectedSquare;
     this.updateBoard(prevX,prevY,newX,newY,this.promotedPiece);
   }
+
+
   public move(x:number, y:number ){
     this.selectingPiece(x,y);
     this.placingPiece(x,y);
-    
-    
+    //this.FENString.emit(this.chessBoard.boardAsFEN);
+    //this.chessBoardService.loadScoreFromApi(this.chessBoard.boardAsFEN);
   }
 
   public isSquarelastMove(x: number, y:number): boolean{
@@ -128,6 +130,7 @@ public promotionPieces(): FENChar[]{
     
     this.unmarkPreviusSelectedSafeSquares();
     this.chessBoardService.chessBoardState$.next(this.chessBoard.boardAsFEN);
+    this.chessBoardService.loadScoreFromApi(this.chessBoard.boardAsFEN);
     
   }
   public promotePiece(piece: FENChar): void{
