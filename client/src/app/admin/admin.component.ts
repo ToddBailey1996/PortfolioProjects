@@ -3,25 +3,31 @@ import { UsersCrudDto } from '../_models/UsersCrudDto';
 import { AdminService } from '../_services/Admin.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ProjectCrudDto } from '../_models/ProjectCrudDto';
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatTabsModule],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent {
   private adminService = inject(AdminService);
+  searchUsername: string = '';
   Users: UsersCrudDto[] = [];
   selectedUser?: UsersCrudDto;
   isEditMode: boolean = false;
   newPassword: string = '';
   confirmPassword: string = '';
-   isModalOpen = false;
+
+  projects: ProjectCrudDto[] = [];
+  selectedProject?: ProjectCrudDto;
+   isModalOpen: boolean = false;
   constructor() { 
 
     this.getusers();
-
+    this.getprojects();
   }
   
   
@@ -50,6 +56,14 @@ export class AdminComponent {
       next: response => this.Users = response,
       error: error => console.log(error)
     });
+  }
+  getuser(){
+   
+      this.adminService.getUserByUsername(this.searchUsername).subscribe({
+        next: response => this.Users = response ? [response] : [],
+        error: error => console.log(error)
+      });
+    
   }
   editUser(user: UsersCrudDto) {
      console.log('Edit button clicked', user);
@@ -104,6 +118,30 @@ export class AdminComponent {
         alert("Password updated successfully!");
         this.newPassword = '';
         this.confirmPassword = '';
+      },
+      error: error => console.log(error)
+    });
+  }
+  getprojects(){
+    this.adminService.getprojects().subscribe({
+      next: response => this.projects = response,
+      error: error => console.log(error)
+    });
+  }
+  
+  
+  
+  
+  
+    editProject(project: ProjectCrudDto) {
+       this.isEditMode = true;
+    this.isModalOpen = true;
+    this.selectedProject = { ...project };  
+  }
+  deleteProject(id: number) {
+    this.adminService.deleteProject(id).subscribe({
+      next: response => {
+        this.projects = this.projects.filter(p => p.id !== id);
       },
       error: error => console.log(error)
     });

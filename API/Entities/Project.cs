@@ -13,8 +13,13 @@ public class Project
     [Column("Name")] 
     public required string Name { get; set; } 
 
-
+    public required string Title { get; set; }
+    public required string TechList {get; set;}
     public required bool RequiresLogin { get; set; }
+
+    public  string? Description { get; set; }
     
     public required DateTime CreatedDate { get; set; }
+
+
 }

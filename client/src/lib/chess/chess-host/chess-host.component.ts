@@ -42,7 +42,8 @@ export class ChessHostComponent extends BaseComponent {
   };
 
   constructor(private fb: FormBuilder) {
-    super(['Angular', 'TypeScript', 'RxJS', 'C#', 'ASP.NET Core', 'Entity Framework Core', 'SQL Server', 'Azure','NUnit']);
+    
+    super();
     this.current = this.componentMap['human'];
 
     this.form.get('player')!.valueChanges

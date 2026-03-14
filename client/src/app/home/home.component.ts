@@ -15,7 +15,14 @@ export class HomeComponent implements OnInit{
   http = inject(HttpClient);
   registerMode = false;
   users: any;
-  projects: any[] = [];
+  visibleProjects: {  component: any; techList: string , description: string }[] = [];
+  ProjectMap: Record<string, any> = {
+    'ChessGame':ChessHostComponent
+
+  };
+  selectedProject?: any;
+  isEditMode: boolean = false;
+  isModalOpen: boolean = false;
   ngOnInit(): void {
     //this.getUsers();
     this.getProjects(); 
@@ -37,9 +44,26 @@ export class HomeComponent implements OnInit{
 
   getProjects(){
     this.http.get<any[]>(environment.apiBaseUrl + '/api/projects').subscribe({
-      next: response => this.projects = response,
+      next: projects  =>{ 
+        this.visibleProjects = projects.map(p => ({
+          component: this.ProjectMap[p.name],
+          title: p.title,
+          techList: p.techList,
+          description: p.description
+
+      }));
+  },
       error: error => console.log(error),
-      complete: () => console.log('GetProjectsCompleted')
-  })
+      complete: () => console.log(this.visibleProjects)
+  });
+  }
+
+   closeModal() {
+    this.isModalOpen = false;
+  }
+  OpenModal(project: any){
+     console.log('About button clicked', project.description);
+    this.selectedProject = project;
+    this.isModalOpen = true;
   }
 }

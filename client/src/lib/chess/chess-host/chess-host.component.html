@@ -1,26 +1,25 @@
 
-
-<form *ngIf="showForm" [formGroup]="form" (ngSubmit)="submit()">
+<div class="game-config-wrapper" *ngIf="showForm">
+<form class="game-card" *ngIf="showForm" [formGroup]="form" (ngSubmit)="submit()">
     <p>Configure Game</p>
     <label>
         Gender:
         <input type="radio" value="computer" formControlName="player"> Computer
         <input type="radio" value="human" formControlName="player"> Human
     </label><br>
-    <label>
+    <div class="form-group">
+        <label class="label">
         Seach Depth:
-        <!--<input type="number" name="searchDepth" min="1" max="10" value="2">-->
-        <input type="number" formControlName="searchDepth" min="1" max="10">
-    </label><br>
-    <button type="submit" [disabled]="form.invalid">
+    </label>
+    <input type="number" formControlName="searchDepth" min="1" max="10" class="input">
+    </div>
+    
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
         Create Game
     </button>
 </form>
-
+</div>
 <ng-container *ngIf="!showForm">
   <ng-container *ngComponentOutlet="current"></ng-container>
 </ng-container>
 
-<ul class="tag-list">
-  <li *ngFor="let tech of techStackList" class="tag">{{ tech }}</li>
-</ul>

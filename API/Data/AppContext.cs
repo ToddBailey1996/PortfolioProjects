@@ -25,5 +25,12 @@ public class AppContext : DbContext
         b.Property(p => p.Id)
          .UseIdentityColumn(); // <-- this ensures SQL Server uses IDENTITY
     });
+   
+
+    // Seed initial data for Projects
+    modelBuilder.Entity<Project>().HasData(
+        new Project { Id = 1, Name = "ChessGame", RequiresLogin = false, CreatedDate = new DateTime(2026, 2, 6),TechList = "C#,ASP.NET Core,Azure,NUnit", Description = "This is a test description", Title = "Chess Game" }
+       
+    );
     }
 }

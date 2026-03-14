@@ -26,13 +26,14 @@ export const routes: Routes = [
             {path: 'lists', component: ListsComponent},
             {path: 'messages', component: MessagesComponent},
             {path: 'chess', component: ChessHostComponent},
-            {path: 'admin', component: AdminComponent}
+            {path: 'admin', component: AdminComponent},
+            {path: 'home', component: HomeComponent }
         ]
     },
    {path: 'errors', component: TestErrorsComponent },
-   {path: 'not-found', component: NotFoundComponent },
+   //{path: 'not-found', component: NotFoundComponent },
    {path: 'server-error', component: ServerErrorComponent },
-    {path: '**', component: ListsComponent, pathMatch: 'full'}
+    {path: '**', component: HomeComponent, pathMatch: 'full'}
 
 
 ];

@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, model, signal } from '@angular/core';
 import {User} from '../_models/user';
 import {UsersCrudDto} from '../_models/UsersCrudDto';
 import { map } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { ProjectCrudDto } from '../_models/ProjectCrudDto';
 @Injectable({
   providedIn: 'root'
 })
@@ -32,4 +33,20 @@ export class AdminService {
     changePassword(id: number, newPassword: string){
         return this.http.post(this.baseUrl + `users/${id}/change-password`, { newPassword });
     }
+    getUserByUsername(username: string){
+        return this.http.get<UsersCrudDto>(this.baseUrl + `users/username/${username}`);
+    }
+
+    getprojects(){
+    return this.http.get<ProjectCrudDto[]>(this.baseUrl + 'projects');
+    }
+    createProject(model: ProjectCrudDto){
+    return this.http.post<ProjectCrudDto>(this.baseUrl + 'projects', model);
+    }
+    updateProject(model: ProjectCrudDto){ 
+    return this.http.put(this.baseUrl + 'projects/' + model.id, model); 
+    }
+    deleteProject(id: number){
+    return this.http.delete(this.baseUrl + 'projects/' + id);
+    }   
 }

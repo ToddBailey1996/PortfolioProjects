@@ -113,6 +113,21 @@ public class UsersController(AppContext context) : BaseApiController
         await context.SaveChangesAsync();
         return Ok();
     }
+
+    
+    [HttpGet("username/{username}")]
+    public async Task<ActionResult<UsersDto>> GetUserByUsername(string username)
+    {   
+        var user = await context.Users.FirstOrDefaultAsync(x => x.UserName.ToLower() == username.ToLower());
+        if (user == null) return NotFound();
+        return Ok(new UsersDto
+        {
+            Id = user.Id,
+            Username = user.UserName,
+            IsActive = user.IsActive,
+            CreatedDate = user.CreatedDate
+        });
+    }   
      private async Task<bool> UserExists(string username){
             return await context.Users.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
         }

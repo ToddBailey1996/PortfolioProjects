@@ -1,25 +1,66 @@
 
-.tag-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.game-config-wrapper {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.game-card {
+  background: white;
+  padding: 5%;            /* instead of 30px, padding scales with screen */
+  width: 90%;             /* takes 90% of its container */
+  max-width: 700px;       /* won’t grow too large on desktop */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 2%;                /* spacing scales too */
+  margin: 0 auto;         /* center horizontally */
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 
-.tag {
-  background-color: #e0f7fa;
-  color: #00796b;
-  padding: 4px 12px;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  white-space: nowrap;
-  display: inline-block;
-  transition: background-color 0.2s;
+.label {
+  font-weight: 600;
 }
 
-.tag:hover {
-  background-color: #b2ebf2;
+.radio-group {
+  display: flex;
+  gap: 20px;
+}
+
+.input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.btn-primary {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #1e4fd8;
+}
+
+button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
 }
