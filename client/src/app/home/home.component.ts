@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RegisterComponent } from "../register/register.component";
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 import { ChessHostComponent } from "../../lib/chess/chess-host/chess-host.component";
 import { CommonModule } from '@angular/common';
 @Component({

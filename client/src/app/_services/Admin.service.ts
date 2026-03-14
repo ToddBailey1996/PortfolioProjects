@@ -3,7 +3,7 @@ import { inject, Injectable, model, signal } from '@angular/core';
 import {User} from '../_models/user';
 import {UsersCrudDto} from '../_models/UsersCrudDto';
 import { map } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 import { ProjectCrudDto } from '../_models/ProjectCrudDto';
 @Injectable({
   providedIn: 'root'

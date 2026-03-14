@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { FENConverter } from '../chess-logic/FENConverter';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })

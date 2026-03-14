@@ -3,7 +3,7 @@ import { Observable, of, switchMap } from 'rxjs';
 import { ChessMove, MyChessAIQueryParams, MyChessAIResponse} from './models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FENChar } from '../chess-logic/models';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
