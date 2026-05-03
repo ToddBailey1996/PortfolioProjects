@@ -22,6 +22,22 @@ public static class IdentityServiceEntensions
                 ValidateAudience = false
             };
         });
+       /* services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+         .AddJwtBearer(options =>
+        {
+            options.Authority = "https://your-auth-provider.com"; // e.g. Auth0, Azure AD
+
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = "https://your-auth-provider.com",
+
+                ValidateAudience = true,
+                ValidAudience = "your-api",
+
+                ValidateIssuerSigningKey = true
+            };
+        });*/
         return services;
     }
 }

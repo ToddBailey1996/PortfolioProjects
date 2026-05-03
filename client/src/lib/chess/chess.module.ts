@@ -6,7 +6,7 @@ import { ChessboardComponent } from './board-component/board-component.component
 import { ComputerModeComponent } from './computer-mode/computer-mode.component';
 import { ScoreBarComponent } from './score-bar/score-bar.component';
 import { ChessHostComponent } from './chess-host/chess-host.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
    
@@ -19,7 +19,8 @@ import { ChessHostComponent } from './chess-host/chess-host.component';
     RouterModule, // keep RouterModule so child routing works if you add it
      ChessboardComponent,
      ScoreBarComponent,
-     ChessHostComponent
+     ChessHostComponent,
+     DragDropModule
   ],
   exports: [
     

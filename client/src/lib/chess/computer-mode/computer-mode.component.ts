@@ -7,11 +7,11 @@ import { firstValueFrom, Subscription } from 'rxjs';
 import { ChessboardService } from '../board-component/chessboard.service';
 import { ScoreBarComponent } from '../score-bar/score-bar.component';
 //import { ChessboardService } from './chessboard.service';
-
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-computer-mode',
     standalone: true,
-    imports: [CommonModule, ScoreBarComponent /*, FormsModule, ...*/],
+    imports: [CommonModule, ScoreBarComponent, DragDropModule /*, FormsModule, ...*/],
   templateUrl: '../board-component/board-component.component.html',
   styleUrls: ['../board-component/board-component.component.css']
 })
