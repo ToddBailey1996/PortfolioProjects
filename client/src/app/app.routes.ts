@@ -28,6 +28,7 @@ export const routes: Routes = [
             {path: 'chess', component: ChessHostComponent},
             {path: 'admin', component: AdminComponent},
             {path: 'home', component: HomeComponent }
+            //need route for CV
         ]
     },
    {path: 'errors', component: TestErrorsComponent },
