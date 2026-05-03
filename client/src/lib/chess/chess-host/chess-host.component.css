@@ -8,6 +8,8 @@
 
 .game-card {
   background: white;
+    justify-content: center;
+  align-items: center;
   padding: 5%;            /* instead of 30px, padding scales with screen */
   width: 90%;             /* takes 90% of its container */
   max-width: 700px;       /* won’t grow too large on desktop */

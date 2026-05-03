@@ -25,7 +25,7 @@ public loadScoreFromApi(fen:string){
       { headers: { 'Content-Type': 'application/json' } }
     )
       .subscribe(score => {
-        this.score$.next(score); // adjust to match your API
+        this.score$.next(score); 
       });
   }
 

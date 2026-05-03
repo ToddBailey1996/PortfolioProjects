@@ -18,7 +18,18 @@ builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddSwaggerGen();
 var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
-
+if (allowedOrigins == null || allowedOrigins.Length == 0)
+{
+    // This will show up in your Azure Log Stream
+    Console.WriteLine("CRITICAL: CORS AllowedOrigins is empty!");
+}
+else 
+{
+    foreach (var origin in allowedOrigins)
+    {
+        Console.WriteLine($"CORS Allowed: {origin}");
+    }
+}
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", policy =>
@@ -33,11 +44,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
+// 3. Routing - THIS IS MISSING IN YOUR CODE
+app.UseRouting();
 app.UseCors("CorsPolicy");
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseStaticFiles(); // <-- Ensures files from 'wwwroot' are served
-// ... other code ...
+// ... other code ...c
 app.MapFallbackToFile("index.html"); 
 app.UseAuthentication();
 app.UseAuthorization();

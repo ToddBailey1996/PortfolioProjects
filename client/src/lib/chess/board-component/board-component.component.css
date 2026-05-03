@@ -1,9 +1,16 @@
+
+.game-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .chess-board {
     display: flex;
     justify-content: center;
     flex-direction: column-reverse;
-    width: 480px;
-    height: 550px;
+    /*width: 480px;
+    height: 550px;*/
 }
 
 .rotated {
@@ -22,8 +29,33 @@
     height: 60px;
     width: 60px;
     cursor: pointer;
-    border: 1px solid blue;
+    border: 1px solid black;
     background-color: white;
+}
+.captured-pieces-black {
+    display: grid;
+        background-color: #D9E4E8;
+
+    grid-template-rows: 1fr 1fr; /* 2 equal rows */
+    grid-auto-flow: row;      /* fill across, then next row */
+    flex-shrink: 0;
+    height: 120px;
+    width: 480px;
+     border: 1px solid black;
+    /*margin-bottom: 10px;*/
+}
+
+.captured-pieces-white {
+    display: grid;
+        background-color: #D9E4E8;
+
+    grid-template-rows: 1fr 1fr; /* 2 equal rows */
+    grid-auto-flow: row;      /* fill across, then next row */
+flex-shrink: 0;
+    height: 120px;
+    width: 480px;
+    border: 1px solid black;
+    /*margin-top: 10px;*/
 }
 
 
@@ -73,7 +105,9 @@
     background-color: #bbb;
     border-radius: 50%;
     z-index: 100;
+    pointer-events: none;
 }
+
 
 .king-in-check {
     box-shadow: inset rgb(179, 21, 0) 0px 0px 40px 0px, inset rgb(163, 11, 0) 0px 0px 40px 0px, inset rgba(0, 0, 0, 1) 0px 0px 36px -24px;

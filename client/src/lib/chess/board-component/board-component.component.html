@@ -1,29 +1,52 @@
     
-    <div class="chess-board" [ngClass]="{'rotated': flipMode}">
+    <div class="game-container" [ngClass]="{'rotated': flipMode}">
+        <div class="captured-pieces-white">
+            <img *ngFor="let piece of capturedPiecesWhite" [src]="pieceImagePaths[piece]" [alt]="piece" class="piece" [ngClass]="{'rotated': flipMode}">
+        </div>
+    <div class="chess-board" 
+        
+    ><!-- [cdkDropListConnectedTo]="allDropLists" cdkDropList [cdkDropListData]="{ x: x, y: y }" (cdkDropListDropped)="onDrop($event)" 
+    
+            (click)= "!isDragging && move(x,y)"
+    -->
        
-        <div *ngFor="let row of chessBoardView; let x = index" class="row">
+        <div *ngFor="let row of chessBoardView; let x = index; trackBy: trackBySquare" class="row">
             <div *ngFor="let piece of row; let y=index " class="square" 
+            [id]="x + '-' + y"
+       [cdkDropListConnectedTo]="allSquareIds"
+            cdkDropList
+      [cdkDropListData]="{ x: x, y: y }"
+      (cdkDropListDropped)="onDrop($event)"
             [ngClass]="{'dark': isSquareDark(x,y),
              'light':!isSquareDark(x,y),
              'selected-square': isSquareSelected(x,y),
              'last-move': isSquarelastMove(x,y),
              'king-in-check': isSquareChecked(x,y),
              'promotion-square': isSquarePromotionSquare(x,y)
-             }"
-            (click)= "move(x,y)">
+             }">
 
                 <div [ngClass]="{'safe-square': isSquareSafeForSelectedPiece(x,y)}"></div>
-                <img *ngIf="piece" [src]="pieceImagePaths[piece]" [alt]="piece" class="piece" [ngClass]="{'rotated': flipMode}">
+                <img *ngIf="piece" [src]="pieceImagePaths[piece]" [alt]="piece" class="piece" 
+                cdkDrag
+                [cdkDragData]="{x: x, y: y}"
+                (cdkDragStarted)="dragStart(x,y)"
+                
+                [ngClass]="{'rotated': flipMode}">
             </div>
            
         </div>
 
-
+         
        
     </div>
-   <score-bar  color1="green" color2="red"></score-bar>
+    <div class="captured-pieces-black">
+            <img *ngFor="let piece of capturedPiecesBlack" [src]="pieceImagePaths[piece]" [alt]="piece" class="piece" [ngClass]="{'rotated': flipMode}">
+         </div>
+   <!--<score-bar  color1="green" color2="red"></score-bar>-->
 
-    <button (click) = "flipBoard()">Flip</button>
+
+    </div>
+        <button (click) = "flipBoard()">Flip</button>
 
         <h2 *ngIf="gameOverMessage" class="game-over-dialog">
             {{gameOverMessage}}
@@ -34,6 +57,4 @@
                 &times;
             </span>
         </div>
-    
-
           

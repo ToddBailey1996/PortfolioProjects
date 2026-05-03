@@ -4,19 +4,23 @@ import { ChessBoard } from '../chess-logic/chessBoard';
 import { CheckState, Color, Coords, FENChar, pieceImagePaths, SafeSquares, SelectedSquare, LastMove} from '../chess-logic/models';
 import { ChessboardService } from './chessboard.service';
 import { ScoreBarComponent } from '../score-bar/score-bar.component';
+import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
+import { ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 //import {chessBoardService } from 'src\app\board-component\board-component.service.ts'
 @Component({
   selector: 'ChessboardComponent',
   standalone: true,
-  imports: [CommonModule, ScoreBarComponent /*, FormsModule, ...*/],
+  imports: [CommonModule, ScoreBarComponent, DragDropModule /*, FormsModule, ...*/],
   templateUrl: './board-component.component.html',
   styleUrls: ['./board-component.component.css']
 })
+
+
 export class ChessboardComponent  {
 
   public pieceImagePaths = pieceImagePaths;
   private chessBoard = new ChessBoard();
-  public chessBoardView: (FENChar|null)[][] = this.chessBoard.chessBoardView;
+  private _boardView: (FENChar|null)[][] = this.chessBoard.chessBoardView;
   public get playerColor(): Color { return this.chessBoard.playerColor;};
   private selectedSquare: SelectedSquare = {piece: null};
   private pieceSafeSquares: Coords[] = [];
@@ -26,15 +30,39 @@ export class ChessboardComponent  {
   public get gameOverMessage():string|undefined {return this.chessBoard.gameOverMessage;};
   public flipMode:boolean = false;
   public BoardEvaluation:number = 0;
+  public isDragging: boolean = false;
 //promotion properties
 @Output() FENString = new EventEmitter<string>();
 public isPromotionActive: boolean = false;
 private promotionCoords : Coords|null = null;
 private promotedPiece: FENChar|null = null;
+public capturedPiecesBlack: FENChar[] = [];
+public capturedPiecesWhite: FENChar[] = [];
+public allSquareIds: string[] = [];
+//@ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
 
-constructor(protected chessBoardService: ChessboardService) { }
+/*get allDropLists(): CdkDropList[] {
+  return this.dropLists ? this.dropLists.toArray() : [];
+}*/
+get chessBoardView() {
+  return this._boardView;
+}
+constructor(protected chessBoardService: ChessboardService) { 
 
- 
+// Generate ['0-0', '0-1', ..., '7-7']
+  for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 8; j++) {
+      this.allSquareIds.push(`${i}-${j}`);
+    }
+  }
+
+}
+trackBySquare(index: number, item: any): string {
+  return index.toString(); 
+}
+  overridingOnInit() {
+  this._boardView = this.chessBoard.chessBoardView;
+ }
 public promotionPieces(): FENChar[]{
   return this.playerColor === Color.white ?
   [FENChar.whiteKnight,FENChar.blackBishop,FENChar.whiteRook,FENChar.whiteQueen] : 
@@ -49,17 +77,19 @@ public promotionPieces(): FENChar[]{
     return this.pieceSafeSquares.some(Coord => Coord.x === x && Coord.y === y)
   }
 
-  public selectingPiece(x:number, y:number): void{
+  public selectingPiece(x:number, y:number,force =false): void{
 
     if(this.gameOverMessage !== undefined) return;
 
-    const piece: FENChar | null = this.chessBoardView[x][y];
+    const piece: FENChar | null = this._boardView[x][y];
     if(!piece) return;
-    if(this.isWrongPieceSelected(piece)) return;
+    if (!force && this.isWrongPieceSelected(piece)) return;
 
-    const isSameSquareClicked: boolean = !!this.selectedSquare.piece && this.selectedSquare.x === x && this.selectedSquare.y === y;
+    const isSameSquareClicked: boolean = !!this.selectedSquare?.piece && this.selectedSquare.x === x && this.selectedSquare.y === y;
     this.unmarkPreviusSelectedSafeSquares();
-    if(isSameSquareClicked) return;
+      if (!force && isSameSquareClicked) return;
+
+      console.log("Selected piece:", piece, "at", x, y);
     this.selectedSquare = {piece,x,y};
     this.pieceSafeSquares = this.safeSquares.get(x + "," + y) || [];
    }
@@ -71,9 +101,9 @@ public promotionPieces(): FENChar[]{
     const isWhitePieceSelected: boolean = piece === piece.toUpperCase();
     return isWhitePieceSelected && this.playerColor === Color.black || !isWhitePieceSelected && this.playerColor == Color.white;
   }
-
+ 
   private placingPiece(newX:number, newY:number): void{
-    if(!this.selectedSquare.piece) return;
+    if(!this.selectedSquare.piece) return;//continue to place piece only if there is a piece selected e.g. selectiungPiece was called before.
     if(!this.isSquareSafeForSelectedPiece(newX,newY)) return;
 
     //pawn promotion 
@@ -89,13 +119,23 @@ public promotionPieces(): FENChar[]{
       this.promotionCoords = {x: newX, y: newY}
       return;
     }
-
+    const capturedPiece = this._boardView[newX][newY];
+    if(this._boardView[newX][newY] !== null){ // capture logic
+      
+      if(this.playerColor === Color.white){
+        this.capturedPiecesBlack.push(capturedPiece!);
+      } else {
+        this.capturedPiecesWhite.push(capturedPiece!);
+      }
+    }
+    
     const {x: prevX,y:prevY} = this.selectedSquare;
     this.updateBoard(prevX,prevY,newX,newY,this.promotedPiece);
   }
 
 
   public move(x:number, y:number ){
+     if (this.isDragging) return;
     this.selectingPiece(x,y);
     this.placingPiece(x,y);
     //this.FENString.emit(this.chessBoard.boardAsFEN);
@@ -124,13 +164,13 @@ public promotionPieces(): FENChar[]{
   protected updateBoard(prevX: number, prevY: number, newX: number, newY: number, promotedPiece: FENChar | null):void{
     this.chessBoard.move(prevX,prevY,newX,newY,this.promotedPiece);
 
-    this.chessBoardView = this.chessBoard.chessBoardView;
+    this._boardView = this.chessBoard.chessBoardView;
     this.checkState = this.chessBoard.checkState;
     this.lastMove = this.chessBoard.lastMove;
     
     this.unmarkPreviusSelectedSafeSquares();
     this.chessBoardService.chessBoardState$.next(this.chessBoard.boardAsFEN);
-    this.chessBoardService.loadScoreFromApi(this.chessBoard.boardAsFEN);
+    //this.chessBoardService.loadScoreFromApi(this.chessBoard.boardAsFEN);
     
   }
   public promotePiece(piece: FENChar): void{
@@ -151,4 +191,38 @@ public promotionPieces(): FENChar[]{
   public flipBoard():void{
     this.flipMode=!this.flipMode;
   }
+  dragStart(x: number, y: number) {
+     this.isDragging = true;
+  const piece = this._boardView[x][y];
+  if (!piece) return;
+  
+  this.selectedSquare = { piece, x, y };
+  this.pieceSafeSquares = this.safeSquares.get(`${x},${y}`) || [];
+  
+  console.log('dragStart selectedSquare:', this.selectedSquare);
+  console.log('pieceSafeSquares:', this.pieceSafeSquares);
+  }
+
+  canDrop(drag: any, drop: CdkDropList): boolean {
+  const to = drop.data;
+  console.log('Checking drop from', this.selectedSquare, 'to', to);
+  if (!this.selectedSquare.piece) return true;
+  // TypeScript now knows selectedSquare has x and y
+  //console.log('Checking drop from', this.selectedSquare, 'to', to);
+  return !(to.x === this.selectedSquare.x && to.y === this.selectedSquare.y);
+}
+onDrop(event: CdkDragDrop<any>) {
+const to = event.container.data;
+  console.log('onDrop to:', to, 'selectedSquare:', this.selectedSquare);
+
+  if (!this.selectedSquare.piece) {
+    console.log('❌ no piece selected');
+    this.isDragging = false;
+    return;
+  }
+
+  this.placingPiece(to.x, to.y);
+  setTimeout(() => { this.isDragging = false; });
+}
+
 }
