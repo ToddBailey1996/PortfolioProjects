@@ -21,14 +21,17 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
                 }
               }
               throw modalStateErrors.flat();
-            }else{
+            }
+            else if (typeof error.error === 'object') {
+            // Case: Error is an object, but not a validation list
+            toastr.error(error.statusText, error.status);
+            }
+            else{
               toastr.error(error.error,error.status)
             }
             break;
           case 401:
             toastr.error('Unauthorized', error.status);
-            localStorage.removeItem('user'); // log out
-            router.navigateByUrl('/login');
             break;
           case 404:
             router.navigateByUrl('/not-found');
@@ -37,9 +40,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             const navigationExtras: NavigationExtras = {state: {error: error.error}};
             router.navigateByUrl('/server-error',navigationExtras)
             break;
-          default:
-            toastr.error('Something unexpected went wrong')
-
+            default:
+            toastr.error('Something unexpected went wrong');
+            console.log(error); // Keep this for debugging CORS/Network issues
+          break;
         }
         
       }

@@ -3,7 +3,7 @@
 <form class="game-card" *ngIf="showForm" [formGroup]="form" (ngSubmit)="submit()">
     <p>Configure Game</p>
     <label>
-        Gender:
+        Apponent:
         <input type="radio" value="computer" formControlName="player"> Computer
         <input type="radio" value="human" formControlName="player"> Human
     </label><br>
@@ -11,7 +11,7 @@
         <label class="label">
         Seach Depth:
     </label>
-    <input type="number" formControlName="searchDepth" min="1" max="10" class="input">
+    <input type="number" formControlName="searchDepth" min="1" max="3" class="input">
     </div>
     
     <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
