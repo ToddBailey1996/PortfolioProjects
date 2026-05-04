@@ -7,7 +7,7 @@ public static class ApplicationServicesExtension
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
-        services.AddCors();
+        //services.AddCors();
         services.AddControllers();
         var cs = config.GetConnectionString("DefaultConnection");
         services.AddDbContext<AppContext>(opt =>
