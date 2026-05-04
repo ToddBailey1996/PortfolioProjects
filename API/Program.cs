@@ -47,13 +47,15 @@ app.UseHttpsRedirection();
 // 3. Routing - THIS IS MISSING IN YOUR CODE
 app.UseRouting();
 app.UseCors("CorsPolicy");
+
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseStaticFiles(); // <-- Ensures files from 'wwwroot' are served
 // ... other code ...c
 app.MapFallbackToFile("index.html"); 
-app.UseAuthentication();
-app.UseAuthorization();
+
 app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
