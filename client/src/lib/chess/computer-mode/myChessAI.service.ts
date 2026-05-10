@@ -35,11 +35,12 @@ export class MychessAIService {
     return {prevX,prevY,newX, newY, promotedPiece};
   }
 
-  public getBestMove(fen:string):Observable<ChessMove>{
+  public getBestMove(fen:string, depth: number = 2):Observable<ChessMove>{
     const queryParams: MyChessAIQueryParams = {
       fen: fen,
-      depth: 2
+      depth: depth
     }
+    console.log("Querying chess engine with params:", queryParams);
     //let params = new HttpParams().appendAll(queryParams);
     return this.http.post<MyChessAIResponse>(this.engine + '/BestMove',queryParams).pipe(
       switchMap(response => {

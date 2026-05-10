@@ -1,4 +1,4 @@
-import { Component, inject,  OnInit } from '@angular/core';
+import { Component, inject,  Input,  OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChessBoard } from '../chess-logic/chessBoard';
 import { ChessboardComponent } from '../board-component/board-component.component';
@@ -11,11 +11,15 @@ import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-computer-mode',
     standalone: true,
-    imports: [CommonModule, ScoreBarComponent, DragDropModule /*, FormsModule, ...*/],
+    imports: [CommonModule, ScoreBarComponent, DragDropModule/*, FormsModule, ...*/],
   templateUrl: '../board-component/board-component.component.html',
   styleUrls: ['../board-component/board-component.component.css']
 })
 export class ComputerModeComponent extends ChessboardComponent implements OnInit{
+  @Input() depth: number = 2;
+
+
+
   private computerSubscriptions$ = new Subscription();
 
   
@@ -40,7 +44,7 @@ export class ComputerModeComponent extends ChessboardComponent implements OnInit
         const player:string = FEN.split(" ")[1];
         if(player == "w")return;
 
-        const {prevX,prevY,newX,newY,promotedPiece} = await firstValueFrom(this.myChessAIService.getBestMove(FEN));
+        const {prevX,prevY,newX,newY,promotedPiece} = await firstValueFrom(this.myChessAIService.getBestMove(FEN, this.depth));
         this.updateBoard(prevX,prevY,newX,newY,promotedPiece);
         this.chessBoardService.loadScoreFromApi(FEN);
         //this.chessBoardService.loadScoreFromApi(this.chessBoard.boardAsFEN);
