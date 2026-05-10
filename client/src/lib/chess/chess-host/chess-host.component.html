@@ -20,6 +20,6 @@
 </form>
 </div>
 <ng-container *ngIf="!showForm">
-  <ng-container *ngComponentOutlet="current"></ng-container>
+  <ng-container *ngComponentOutlet="current; inputs: dynamicInputs"></ng-container>
 </ng-container>
 

@@ -60,3 +60,15 @@
   max-width: 500px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
+/* Target the internal SVG path of the spinner */
+::v-deep .mat-mdc-progress-spinner circle, 
+::v-deep .mat-progress-spinner circle {
+  stroke: #ff5722 !important; /* Your custom hex color */
+ 
+}
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust as needed */
+}

@@ -4,10 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ChessHostComponent } from "../../lib/chess/chess-host/chess-host.component";
 import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { delay } from 'rxjs/operators'; // Import the operator
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RegisterComponent, ChessHostComponent, CommonModule],
+  imports: [RegisterComponent, ChessHostComponent, CommonModule,MatProgressSpinnerModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -23,6 +25,7 @@ export class HomeComponent implements OnInit{
   selectedProject?: any;
   isEditMode: boolean = false;
   isModalOpen: boolean = false;
+  isLoading: boolean = true;
   ngOnInit(): void {
     //this.getUsers();
     this.getProjects(); 
@@ -43,7 +46,8 @@ export class HomeComponent implements OnInit{
   }
 
   getProjects(){
-    this.http.get<any[]>(environment.apiBaseUrl + '/api/projects').subscribe({
+    this.isLoading = true;
+    this.http.get<any[]>(environment.apiBaseUrl + '/api/projects').pipe(delay(20000)).subscribe({
       next: projects  =>{ 
         this.visibleProjects = projects.map(p => ({
           component: this.ProjectMap[p.name],
@@ -53,8 +57,14 @@ export class HomeComponent implements OnInit{
 
       }));
   },
-      error: error => console.log(error),
-      complete: () => console.log(this.visibleProjects)
+      error: error => {
+        console.log(error);
+        this.isLoading = false;
+      },
+      complete: () => {
+        console.log(this.visibleProjects);
+        this.isLoading = false;
+      }
   });
   }
 

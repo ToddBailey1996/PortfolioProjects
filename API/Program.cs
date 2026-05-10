@@ -39,6 +39,7 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+builder.Services.AddHealthChecks();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -80,5 +81,5 @@ using (var scope = app.Services.CreateScope())
         context.SaveChanges();
     }
 }
-
+app.MapHealthChecks("/health");
 app.Run();
