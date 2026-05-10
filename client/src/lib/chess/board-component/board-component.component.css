@@ -32,32 +32,22 @@
     border: 1px solid black;
     background-color: white;
 }
-.captured-pieces-black {
-    display: grid;
-        background-color: #D9E4E8;
-
-    grid-template-rows: 1fr 1fr; /* 2 equal rows */
-    grid-auto-flow: row;      /* fill across, then next row */
-    flex-shrink: 0;
-    height: 120px;
-    width: 480px;
-     border: 1px solid black;
-    /*margin-bottom: 10px;*/
-}
-
+.captured-pieces-black,
 .captured-pieces-white {
     display: grid;
-        background-color: #D9E4E8;
+    background-color: #D9E4E8;
 
-    grid-template-rows: 1fr 1fr; /* 2 equal rows */
-    grid-auto-flow: row;      /* fill across, then next row */
-flex-shrink: 0;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+
     height: 120px;
     width: 480px;
-    border: 1px solid black;
-    /*margin-top: 10px;*/
-}
 
+    border: 1px solid black;
+    overflow: hidden; /* prevents spill outside */
+    align-items: center;
+    justify-items: center;
+}
 
 .game-over-message {
     color: white;
