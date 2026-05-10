@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit{
 
   getProjects(){
     this.isLoading = true;
-    this.http.get<any[]>(environment.apiBaseUrl + '/api/projects').pipe(delay(20000)).subscribe({
+    this.http.get<any[]>(environment.apiBaseUrl + '/api/projects').subscribe({
       next: projects  =>{ 
         this.visibleProjects = projects.map(p => ({
           component: this.ProjectMap[p.name],
