@@ -28,7 +28,16 @@ Feel free to explore and learn more about my work.</p>
   </ng-template>
 
   <!-- Modal Code remains the same -->
-  <div class="modal" *ngIf="isModalOpen">
-    <!-- ... -->
-  </div>   
+<div class="modal" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+
+    <h2>About Project</h2>
+    <h3>{{ selectedProject.title }}</h3>
+
+    <div class="project-html"
+         [innerHTML]="selectedProject.description">
+    </div>
+  </div>
+</div>  
 </div>

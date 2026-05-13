@@ -87,5 +87,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'Todd-Portfolio'
-          package: './publish'
+          app-name: 'Portfolio-Frontend-API'
+          slot-name: 'Production'
+          package: .
+          
