@@ -11,7 +11,7 @@ import { delay } from 'rxjs/operators'; // Import the operator
   standalone: true,
   imports: [RegisterComponent, ChessHostComponent, CommonModule,MatProgressSpinnerModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
   http = inject(HttpClient);
