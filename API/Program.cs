@@ -58,6 +58,7 @@ app.UseStaticFiles(); // <-- Ensures files from 'wwwroot' are served
 app.MapFallbackToFile("index.html"); 
 
 app.MapControllers();
+/*try{
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppContext>();
@@ -81,5 +82,9 @@ using (var scope = app.Services.CreateScope())
         context.SaveChanges();
     }
 }
+}catch(Exception ex){
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex,"An error occurred during migration");
+}*/
 app.MapHealthChecks("/health");
 app.Run();
