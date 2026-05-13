@@ -1,68 +1,90 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js app to Azure Web App - Todd-Portfolio
+name: Build and deploy .NET + Angular to Azure Web App
 
 on:
   push:
     branches:
-      - master
+      - master    # change to 'main' if your repo uses main
   workflow_dispatch:
-
+permissions:
+  id-token: write
+  contents: read
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Node.js version
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
-
-      - name: npm install, build, and test
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: DEBUG – show repo structure
         run: |
-          npm install
-          npm run build --if-present
+          echo "===== ROOT ====="
+            ls -la
+
+            echo "===== ProjectDemoWebsite ====="
+            ls -la ProjectDemoWebsite || true
+
+            echo "===== find csproj ====="
+            find . -name "*.csproj"
+      # 1) Build Angular
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install and build Angular client
+        working-directory: ./client
+        run: |
+          npm ci
+          npm run build -- --configuration production
+
+      # 2) Setup .NET
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # 3) Copy Angular build into API wwwroot (FIXED PATH)
+      - name: Copy Angular build into API wwwroot
+        run: |
+          API_PROJECT_PATH="./API"
+          # Point directly to where index.html and assets are located
+          SRC="./client/dist/client/browser" 
+
+          echo "Copying client build from $SRC to $API_PROJECT_PATH/wwwroot"
+          if [ ! -d "$SRC" ]; then
+            echo "ERROR: Angular browser directory not found at $SRC"
+            exit 1
+          fi
           
+          rm -rf "$API_PROJECT_PATH/wwwroot" || true
+          mkdir -p "$API_PROJECT_PATH/wwwroot"
+          cp -r "$SRC/"* "$API_PROJECT_PATH/wwwroot/"
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+          echo "wwwroot contents:"
+          ls -la "$API_PROJECT_PATH/wwwroot"
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-app
-          path: release.zip
+      # 4) Publish .NET app (auto-detect csproj inside API_PROJECT_PATH)
+      - name: Publish .NET app
+        run: |
+          API_PROJECT_PATH="./API"
+          CSPROJ=$(ls "$API_PROJECT_PATH"/*.csproj 2>/dev/null | head -n 1)
+          if [ -z "$CSPROJ" ]; then
+            echo "ERROR: No .csproj found in $API_PROJECT_PATH"
+            ls -la "$API_PROJECT_PATH" || true
+            exit 1
+          fi
+          echo "Publishing $CSPROJ"
+          dotnet publish "$CSPROJ" -c Release -o ./publish
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: node-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-      
+      # 5) Deploy to Azure Web App
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_16BC7C445BBF45DCA6259DEB7E2B942B }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8F006D3FD20149A7B4EE047E0BFB5F0C }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BEC55C1C4CD847D8A0D69082AACEE1C4 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'Portfolio-Frontend-API'
