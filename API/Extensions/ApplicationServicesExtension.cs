@@ -12,9 +12,15 @@ public static class ApplicationServicesExtension
         var cs = config.GetConnectionString("DefaultConnection");
         services.AddDbContext<AppContext>(opt =>
 {
-            // This looks for the "DefaultConnection" key in your JSON
-            opt.UseSqlServer(cs);
-        });
+    opt.UseSqlServer(cs, sqlOptions => 
+    {
+        // This enables automatic retries for transient failures
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(30),
+            errorNumbersToAdd: null);
+    });
+});
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddScoped<ITokenService,TokenService>();
