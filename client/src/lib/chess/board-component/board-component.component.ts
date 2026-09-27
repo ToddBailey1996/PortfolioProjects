@@ -17,7 +17,7 @@ import { ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 
 
 export class ChessboardComponent  {
-
+ 
   public pieceImagePaths = pieceImagePaths;
   private chessBoard = new ChessBoard();
   private _boardView: (FENChar|null)[][] = this.chessBoard.chessBoardView;

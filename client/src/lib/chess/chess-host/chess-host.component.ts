@@ -54,10 +54,13 @@ export class ChessHostComponent extends BaseComponent {
 
   }
   get dynamicInputs() {
-  return {
-    // This key 'depth' must match the @Input() name in ComputerModeComponent
-    depth: this.form.value.searchDepth ?? 2
-  };
+    if (this.form.value.player === 'computer') {
+    return {
+      depth: this.form.value.searchDepth ?? 2
+    };
+  }
+
+  return {};
 }
 
   use(comp: Type<any>) {
@@ -65,16 +68,18 @@ export class ChessHostComponent extends BaseComponent {
   }
 
   submit() {
-      if (this.form.valid) {
-    const player = this.form.value.player;
-    const depth = this.form.value.searchDepth;
-    this.current =
-      player === 'computer'
-        ? this.computerComp
-        : this.chessComp;
+    if (this.form.valid) {
+      const selectedPlayer = this.form.get('player')?.value ?? 'human';
+      const selectedDepth = this.form.get('searchDepth')?.value ?? 2;
 
-    this.showForm = false; // ✅ hide form, show board
-  }
-  
+      this.player = selectedPlayer;
+      this.depth = selectedDepth;
+      this.current =
+        selectedPlayer === 'computer'
+          ? this.computerComp
+          : this.chessComp;
+
+      this.showForm = false; // ✅ hide form, show board
+    }
   }
 }

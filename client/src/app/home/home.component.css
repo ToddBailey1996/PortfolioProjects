@@ -1,4 +1,4 @@
-.panel-list {
+/*.panel-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -40,12 +40,12 @@
   background-color: #b2ebf2;
 }
     .modal {
-  position: fixed;          /* stay on top of everything */
+  position: fixed;          // stay on top of everything
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5); /* semi-transparent overlay */
+  background-color: rgba(0,0,0,0.5); //semi-transparent overlay
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,7 +96,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px; /* Adjust as needed */
+  height: 100px; /Adjust as needed
 }
 .close {
   position: absolute;
@@ -161,4 +161,534 @@
   background: rgba(255,255,255,0.15);
   border-radius: 999px;
 }
- 
+*/
+
+
+/* =========================================
+   Portfolio Introduction
+   ========================================= */
+
+.portfolio-intro {
+  max-width: 900px;
+  margin: 0 auto 50px;
+}
+
+.portfolio-intro h1 {
+  margin-bottom: 20px;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.intro-lead {
+  max-width: 800px;
+  margin: 0 auto 16px;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: #374151;
+}
+
+.intro-description {
+  max-width: 750px;
+  margin: 0 auto 30px;
+  line-height: 1.7;
+  color: #6b7280;
+}
+
+
+/* =========================================
+   Infrastructure / Loading Notice
+   ========================================= */
+
+.loading-notice {
+  max-width: 750px;
+  margin: 30px auto 0;
+  padding: 16px 20px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  text-align: left;
+
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  color: #475569;
+}
+
+.loading-notice-icon {
+  flex-shrink: 0;
+
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e0f2fe;
+  color: #0369a1;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.loading-notice strong {
+  display: block;
+  margin-bottom: 4px;
+
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.loading-notice p {
+  margin: 0;
+
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   Projects Section
+   ========================================= */
+
+.projects-section {
+  width: 100%;
+  margin-bottom: 60px;
+}
+
+.section-heading {
+  margin-bottom: 24px;
+}
+
+.section-heading h2 {
+  margin-bottom: 6px;
+
+  font-size: 2rem;
+  font-weight: 700;
+
+  color: #1f2937;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #6b7280;
+}
+
+
+/* =========================================
+   Project Cards
+   ========================================= */
+
+.panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  width: 100%;
+  padding: 0;
+}
+
+.panel {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.panel:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================
+   Project Header
+   ========================================= */
+
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+.project-header h3 {
+  margin: 0;
+
+  font-size: 1.5rem;
+  font-weight: 600;
+
+  color: #1f2937;
+}
+
+
+/* =========================================
+   Project Preview
+   ========================================= */
+
+.project-preview {
+  margin-bottom: 20px;
+}
+
+
+/* =========================================
+   Technology Tags
+   ========================================= */
+
+.tag-list {
+  list-style: none;
+
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+.tag {
+  display: inline-block;
+
+  padding: 5px 12px;
+
+  border-radius: 999px;
+
+  background: #eff6ff;
+  color: #1d4ed8;
+
+  border: 1px solid #dbeafe;
+
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  white-space: nowrap;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.tag:hover {
+  background: #dbeafe;
+  border-color: #bfdbfe;
+}
+
+
+/* =========================================
+   Loading State
+   ========================================= */
+
+.spinner-wrapper {
+  min-height: 220px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 16px;
+
+  text-align: center;
+}
+
+.loading-text {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.loading-text strong {
+  color: #374151;
+  font-size: 1rem;
+}
+
+.loading-text span {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+
+/* =========================================
+   Modal
+   ========================================= */
+
+.modal {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 24px;
+
+  background: rgba(15, 23, 42, 0.55);
+
+  backdrop-filter: blur(6px);
+
+  z-index: 9999;
+
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  position: relative;
+
+  width: min(900px, 95vw);
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  padding: 36px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.15);
+
+  color: #111827;
+
+  animation: modalSlide 0.25s ease;
+}
+
+
+/* =========================================
+   Modal Header
+   ========================================= */
+
+.modal-header {
+  margin-bottom: 24px;
+  padding-right: 40px;
+}
+
+.modal-label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #2563eb;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.modal-header h2 {
+  margin: 0;
+
+  font-size: 2rem;
+  font-weight: 700;
+
+  color: #111827;
+}
+
+
+/* =========================================
+   Modal Close Button
+   ========================================= */
+
+.close {
+  position: absolute;
+
+  top: 18px;
+  right: 18px;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #f3f4f6;
+
+  color: #4b5563;
+
+  font-size: 1.5rem;
+  font-weight: 300;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.close:hover {
+  background: #111827;
+  color: #ffffff;
+
+  transform: scale(1.05);
+}
+
+.close:active {
+  transform: scale(0.95);
+}
+
+.close:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 3px;
+}
+
+
+/* =========================================
+   Modal Content
+   ========================================= */
+
+.project-html {
+  line-height: 1.7;
+  color: #374151;
+}
+
+.project-html h1,
+.project-html h2,
+.project-html h3 {
+  color: #111827;
+}
+
+.project-html a {
+  color: #2563eb;
+}
+
+.project-html a:hover {
+  color: #1d4ed8;
+}
+
+
+/* =========================================
+   Modal Scrollbar
+   ========================================= */
+
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* =========================================
+   Animations
+   ========================================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlide {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================
+   Responsive Design
+   ========================================= */
+
+@media (max-width: 768px) {
+
+  .portfolio-intro {
+    margin-bottom: 35px;
+  }
+
+  .portfolio-intro h1 {
+    font-size: 2.2rem;
+  }
+
+  .intro-lead {
+    font-size: 1.05rem;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+
+  .project-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .project-header .btn {
+    width: 100%;
+  }
+
+  .modal {
+    padding: 12px;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-height: 94vh;
+
+    padding: 28px 22px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .loading-notice {
+    text-align: left;
+  }
+}
+
