@@ -18,10 +18,13 @@ builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddSwaggerGen();
 var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+
 if (allowedOrigins == null || allowedOrigins.Length == 0)
 {
     // This will show up in your Azure Log Stream
-    Console.WriteLine("CRITICAL: CORS AllowedOrigins is empty!");
+    //Console.WriteLine("CRITICAL: CORS AllowedOrigins is empty!");
+     throw new InvalidOperationException(
+        "CORS AllowedOrigins is missing or empty.");
 }
 else 
 {
@@ -86,5 +89,8 @@ using (var scope = app.Services.CreateScope())
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     logger.LogError(ex,"An error occurred during migration");
 }*/
+Console.WriteLine($"Environment: {app.Environment.EnvironmentName}");
+Console.WriteLine(
+    $"AllowedOrigins: {string.Join(", ", allowedOrigins ?? Array.Empty<string>())}");
 app.MapHealthChecks("/health");
 app.Run();
