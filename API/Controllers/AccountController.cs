@@ -11,8 +11,14 @@ using System.Text;
 namespace API.Controllers;
 
 
-public class AccountController(AppContext context, ITokenService tokenService) : BaseApiController
+public class AccountController/*(AppContext context, ITokenService tokenService)*/ : BaseApiController
 {
+        private readonly IAuthService _authService;
+
+        public AccountController(IAuthService authService)
+        {
+            _authService = authService;
+        }
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto){
 
@@ -21,48 +27,23 @@ public class AccountController(AppContext context, ITokenService tokenService) :
                     return BadRequest("Username Taken.");
                 }
                 
-                using var hmac = new HMACSHA512();
 
-                var user = new AppUser
-                {
-                    UserName = registerDto.Username.ToLower(),
-                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                    PasswordSalt = hmac.Key
-                };
-                context.Users.Add(user);
-                await context.SaveChangesAsync();
-                return new UserDto
-            {
-                    Username = user.UserName,
-                    Token = tokenService.CreateToken(user)
+            var user = await _authService.RegisterAsync(registerDto);
 
-            }; 
+            return user == null ? BadRequest("Username Taken.") : user;
+
         }
 
         [HttpPost("Login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            
-            var user = await context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
-            if(user == null) return Unauthorized("invalid username");
+        
+            var user = await _authService.LoginAsync(loginDto);
 
-            using var hmac = new HMACSHA512(user.PasswordSalt);
-
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-            for (int i = 0; i <computedHash.Length; i++){
-                if(computedHash[i] != user.PasswordHash[i]){
-                    return Unauthorized("Invalid Password");
-                }
-            }
-            return new UserDto
-            {
-                    Username = user.UserName,
-                    Token = tokenService.CreateToken(user)
-
-            }; 
+            return user == null ? Unauthorized("Invalid Username or Password") : user;
         }
 
         private async Task<bool> UserExists(string username){
-            return await context.Users.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
+            return await _authService.UserExists(username);
         }
 }

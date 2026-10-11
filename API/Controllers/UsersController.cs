@@ -3,26 +3,22 @@ using System.Text;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace API.Controllers;
 
 
-public class UsersController(AppContext context) : BaseApiController
+public class UsersController(IUserService userService) : BaseApiController
 {
 
   
     [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UsersDto>>> GetUsers(){
-        var users = await context.Users.Select(user => new UsersDto
-        {
-            Id = user.Id,
-            Username = user.UserName,
-            IsActive = user.IsActive,
-            CreatedDate = user.CreatedDate
-        }).ToListAsync();
+        var users = await userService.GetUsers();
+
         return Ok(users);
 
     }
@@ -31,31 +27,27 @@ public class UsersController(AppContext context) : BaseApiController
     [HttpGet("{id:int}")]
     public async Task<ActionResult<UsersDto>> GetUsers(int id)
     {
-        var user = await context.Users.FindAsync(id);
-        if (user != null)
-            return Ok(new UsersDto
-            {
-                Id = user.Id,
-                Username = user.UserName,
-                IsActive = user.IsActive,
-            CreatedDate = user.CreatedDate
-            });
+         var user = await userService.GetUser(id);
 
-        return NotFound();
+        if (user == null)
+            return NotFound();
+
+        return Ok(user);
 
     }
 
     [Authorize]
     [HttpPut("{id:int}")]
-    public async Task<bool> UpdateUser(UsersDto userDto)
+    public async Task<ActionResult> UpdateUser(int id, UsersDto userDto)
     {
-        var user = await context.Users.FindAsync(userDto.Id);
-        if (user == null) return false;
-        user.UserName = userDto.Username;
-        user.IsActive = userDto.IsActive;
-        context.Users.Update(user);
-        await context.SaveChangesAsync();
-        return true;
+       userDto.Id = id;
+
+        var updated = await userService.UpdateUser(userDto);
+
+        if (!updated)
+            return NotFound();
+
+        return NoContent();
     }
     [Authorize]
     [HttpPost]    
@@ -63,72 +55,47 @@ public class UsersController(AppContext context) : BaseApiController
     {
 
 
-        if (await UserExists(newUser.Username))
-                {
-                    return BadRequest("Username Taken.");
-                }
-        using var hmac = new HMACSHA512();
+                var user = await userService.CreateUser(newUser);
 
-        var user = new AppUser
-                {
-                    UserName = newUser.Username.ToLower(),
-                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(newUser.Password)),
-                    PasswordSalt = hmac.Key,
-                    IsActive = true,
-                    CreatedDate = DateTime.UtcNow
-                };
-            
-        
-        context.Users.Add(user);
-        await context.SaveChangesAsync();
-        return Ok(new UsersDto
-        {
-            Id = user.Id,
-            Username = user.UserName,
-            IsActive = user.IsActive,
-            CreatedDate = user.CreatedDate
-        });
+        if (user == null)
+            return BadRequest("Username Taken.");
+
+        return Ok(user);
     }
     [Authorize]
     [HttpPatch("{id:int}/updatepassword")]  
     public async Task<ActionResult> Updatepassword(int id, string newPassword)
     {
-        var user = await context.Users.FindAsync(id);
-        if (user == null) return NotFound();
+        var updated = await userService.UpdatePassword(id, newPassword);
 
-        using var hmac = new HMACSHA512();
-        user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(newPassword));
-        user.PasswordSalt = hmac.Key;
-        context.Users.Update(user);
-        await context.SaveChangesAsync();
-       return NoContent();
+        if (!updated)
+            return NotFound();
+
+        return NoContent();
     }
     [Authorize]
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteUser(int id)
     {
-        var user = await context.Users.FindAsync(id);
-        if (user == null) return NotFound();
-        context.Users.Remove(user);
-        await context.SaveChangesAsync();
-        return Ok();
+        var deleted = await userService.DeleteUser(id);
+
+        if (!deleted)
+            return NotFound();
+
+        return NoContent();
     }
 
     
     [HttpGet("username/{username}")]
     public async Task<ActionResult<UsersDto>> GetUserByUsername(string username)
     {   
-        var user = await context.Users.FirstOrDefaultAsync(x => x.UserName.ToLower() == username.ToLower());
-        if (user == null) return NotFound();
-        return Ok(new UsersDto
-        {
-            Id = user.Id,
-            Username = user.UserName,
-            IsActive = user.IsActive,
-            CreatedDate = user.CreatedDate
-        });
+               var user = await userService.GetUserByUsername(username);
+
+        if (user == null)
+            return NotFound();
+
+        return Ok(user);
+
     }   
-     private async Task<bool> UserExists(string username){
-            return await context.Users.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
-        }
+     
 }

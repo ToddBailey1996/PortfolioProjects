@@ -58,7 +58,7 @@ export class ChessHostComponent extends BaseComponent {
     return {
       depth: this.form.value.searchDepth ?? 2
     };
-  }
+  }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 
   return {};
 }
