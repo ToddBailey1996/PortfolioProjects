@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit{
   http = inject(HttpClient);
   registerMode = false;
   users: any;
-  visibleProjects: {  component: any; techList: string , description: string }[] = [];
+  visibleProjects: {  component: any; title: string; techList: string , description: string }[] = [];
   ProjectMap: Record<string, any> = {
     'ChessGame':ChessHostComponent
 

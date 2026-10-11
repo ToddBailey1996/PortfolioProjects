@@ -1,45 +1,204 @@
+
 <div class="container mt-5">
-  <div style="text-align:center">
-    <h1>Hi, I am Todd and welcome to my portfolio!</h1>
-    <p>This site showcases a selection of projects I’ve built to strengthen my skills and explore new technologies.
-Each project highlights the tools and technologies used, along with a detailed overview, relevant links, and usage instructions where applicable.
-Feel free to explore and learn more about my work.</p>
 
-<p>If the projects don't load straight away, please wait a moment as it is probably my azure sql database/Api cold starting.</p>
-  </div>
+  <!-- =========================================
+       Introduction
+       ========================================= -->
 
-  <!-- 1. ADD THE CONDITIONAL WRAPPER HERE -->
-  <div *ngIf="!isLoading; else loader">
-    <div class="panel-list">
-      <div class="panel" *ngFor="let project of visibleProjects">
-        <button class="btn btn-info btn-lg me-2" (click)="OpenModal(project)">About</button>
-        <ng-container *ngComponentOutlet="project.component"></ng-container>
-        <ul class="tag-list">
-          <li *ngFor="let tech of project.techList.split(',')" class="tag">{{ tech }}</li>
-        </ul>
+  <section class="portfolio-intro text-center">
+
+    <h1>Hi, I'm Todd</h1>
+
+    <p class="intro-lead">
+      Welcome to my portfolio. This site showcases a selection of projects
+      I've built to strengthen my skills and explore new technologies.
+    </p>
+
+    <p class="intro-description">
+      Each project highlights the tools and technologies used, along with
+      a detailed overview, relevant links, and usage instructions where applicable.
+      Feel free to explore and learn more about my work.
+    </p>
+
+    <!-- Azure / API information -->
+    <div class="loading-notice">
+
+      <div class="loading-notice-icon">
+        <span>i</span>
       </div>
+
+      <div>
+        <strong>Projects may take a few moments to load.</strong>
+
+        <p>
+          Some projects are powered by an ASP.NET Core API and Azure SQL,
+          which may need to cold-start after a period of inactivity.
+        </p>
+      </div>
+
     </div>
+
+  </section>
+
+
+  <!-- =========================================
+       Projects
+       ========================================= -->
+
+  <section class="projects-section">
+
+    <div *ngIf="!isLoading; else loader">
+
+      <div class="section-heading">
+        <h2>Projects</h2>
+
+        <p>
+          A selection of my development projects and technical work.
+        </p>
+      </div>
+
+
+      <!-- Project List -->
+
+      <div class="panel-list">
+
+        <div
+          class="panel"
+          *ngFor="let project of visibleProjects">
+
+          <!-- Project Header -->
+
+          <div class="project-header">
+
+            <div>
+              <h3>{{ project.title }}</h3>
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="OpenModal(project)">
+
+              About Project
+
+            </button>
+
+          </div>
+
+
+          <!-- Project Component -->
+
+          <div class="project-preview">
+
+            <ng-container
+              *ngComponentOutlet="project.component">
+            </ng-container>
+
+          </div>
+
+
+          <!-- Technologies -->
+
+          <ul class="tag-list">
+
+            <li
+              *ngFor="let tech of project.techList.split(',')"
+              class="tag">
+
+              {{ tech.trim() }}
+
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================================
+         Loading State
+         ========================================= -->
+
+    <ng-template #loader>
+
+      <div class="spinner-wrapper">
+
+        <mat-spinner
+          diameter="50"
+          color="primary">
+        </mat-spinner>
+
+        <div class="loading-text">
+
+          <strong>Fetching projects...</strong>
+
+          <span>
+            The API may be starting from an idle state.
+          </span>
+
+        </div>
+
+      </div>
+
+    </ng-template>
+
+  </section>
+
+
+  <!-- =========================================
+       Project Details Modal
+       ========================================= -->
+
+  <div
+    class="modal"
+    *ngIf="isModalOpen"
+    (click)="closeModal()">
+
+    <div
+      class="modal-content"
+      (click)="$event.stopPropagation()">
+
+      <!-- Close -->
+
+      <button
+        type="button"
+        class="close"
+        aria-label="Close project details"
+        (click)="closeModal()">
+
+        &times;
+
+      </button>
+
+
+      <!-- Modal Header -->
+
+      <div class="modal-header">
+
+        <span class="modal-label">
+          Project Details
+        </span>
+
+        <h2>
+          {{ selectedProject?.title }}
+        </h2>
+
+      </div>
+
+
+      <!-- Project Description -->
+
+      <div
+        class="project-html"
+        [innerHTML]="selectedProject?.description">
+      </div>
+
+    </div>
+
   </div>
 
-  <!-- 2. YOUR TEMPLATE (Keep this as is) -->
-  <ng-template #loader>
-    <div class="spinner-wrapper">
-      <mat-spinner diameter="50" color="primary"></mat-spinner> 
-      <p>Fetching projects...</p>
-    </div>
-  </ng-template>
-
-  <!-- Modal Code remains the same -->
-<div class="modal" *ngIf="isModalOpen">
-  <div class="modal-content">
-    <span class="close" (click)="closeModal()">&times;</span>
-
-    <h2>About Project</h2>
-    <h3>{{ selectedProject.title }}</h3>
-
-    <div class="project-html"
-         [innerHTML]="selectedProject.description">
-    </div>
-  </div>
-</div>  
 </div>
+
