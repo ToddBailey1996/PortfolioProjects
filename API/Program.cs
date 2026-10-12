@@ -58,9 +58,10 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseStaticFiles(); // <-- Ensures files from 'wwwroot' are served
 // ... other code ...c
+app.MapControllers();
 app.MapFallbackToFile("index.html"); 
 
-app.MapControllers();
+
 /*try{
 using (var scope = app.Services.CreateScope())
 {
