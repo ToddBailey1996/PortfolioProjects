@@ -33,6 +33,11 @@ else
         Console.WriteLine($"CORS Allowed: {origin}");
     }
 }
+//if (allowedOrigins == null || allowedOrigins.Length == 0)
+//{
+    // Fallback explicitly for production so it never fails silently or throws
+    allowedOrigins = new[] { "https://victorious-bay-0a79a331e.6.azurestaticapps.net" };
+//}
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", policy =>
@@ -47,11 +52,11 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
-app.UseHttpsRedirection();
+
 // 3. Routing - THIS IS MISSING IN YOUR CODE
 app.UseRouting();
 app.UseCors("CorsPolicy");
-
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSwagger();
