@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Services;
 public class UserService : IUserService
 {
-    private readonly DataContext _context;
+    private readonly AppContext _context;
 
-    public UserService(DataContext context)
+    public UserService(AppContext context)
     {
         _context = context;
     }
