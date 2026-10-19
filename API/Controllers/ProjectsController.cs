@@ -11,9 +11,9 @@ namespace API.Controllers;
 public class ProjectsController : BaseApiController
 {
 
-    private readonly ProjectService _projectService;
+    private readonly IProjectService _projectService;
 
-    public ProjectsController(ProjectService projectService)
+    public ProjectsController(IProjectService projectService)
     {
         _projectService = projectService;
     }
