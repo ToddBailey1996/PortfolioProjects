@@ -33,11 +33,11 @@ else
         Console.WriteLine($"CORS Allowed: {origin}");
     }
 }
-//if (allowedOrigins == null || allowedOrigins.Length == 0)
-//{
+if (allowedOrigins == null || allowedOrigins.Length == 0)
+{
     // Fallback explicitly for production so it never fails silently or throws
     allowedOrigins = new[] { "https://victorious-bay-0a79a331e.6.azurestaticapps.net" };
-//}
+}
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", policy =>
