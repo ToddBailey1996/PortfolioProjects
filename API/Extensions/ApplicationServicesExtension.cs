@@ -1,5 +1,6 @@
 ﻿using API.Data;
 using API.Interfaces;
+using API.Services;
 using Microsoft.EntityFrameworkCore;
 namespace API.Extensions;
 
@@ -24,6 +25,8 @@ public static class ApplicationServicesExtension
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddScoped<ITokenService,TokenService>();
+        services.AddScoped<IProjectService, ProjectService>();
+        services.AddScoped<IUserService, UserService>();
         Console.WriteLine("CONNECTION STRING = " + cs);
         return services;
     }
