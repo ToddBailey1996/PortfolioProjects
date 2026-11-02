@@ -1,44 +1,109 @@
+```html
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container">
-      <a class="navbar-brand" routerLink="/">Chess App</a>
-      
-        <ul class="navbar-nav me-auto mb-2 mb-md-0" >
-          @if(accountService.currentUser()){
-            <li class="nav-item">
-              <a routerLink="/admin" routerLinkActive="active" class="nav-link">Admin</a>
-            </li>
-          <li class="nav-item">
-            <a routerLink="/chess" routerLinkActive="active" class="nav-link">Chess</a>
-          </li>
-          
-        }
-        <!--<li class="nav-item">
-          <a routerLink="/errors" routerLinkActive="active" class="nav-link">Errors</a>
-        </li>-->
-        <li class="nav-item">
-          <a routerLink="/CV" routerLinkActive="active" class="nav-link">CV</a>
-        </li>
-        </ul>
-      
+  <div class="container">
+
+    <a class="navbar-brand" routerLink="/">Chess App</a>
+
+    <!-- Main navigation -->
+    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+
       @if(accountService.currentUser()) {
-        <div dropdown class="dropdown">
-          <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">
-            Welcome {{accountService.currentUser()?.username | titlecase}}
-          </a>
-          <div *dropdownMenu class="dropdown-menu">
-            <a class="dropdown-item">Edit Profile</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" (click)="logout()">Log Out</a>
-          </div>
-        </div>
+        <li class="nav-item">
+          <a routerLink="/admin" routerLinkActive="active" class="nav-link">Admin</a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/chess" routerLinkActive="active" class="nav-link">Chess</a>
+        </li>
       }
-        @if(!accountService.currentUser()){
-          <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off">
-            <input name="username" [(ngModel)]="model.username" class="form-control me-2" placeholder="Username" >
-            <input name="password" [(ngModel)]="model.password" class="form-control me-2" placeholder="Password" type ="password" >
-            <button class="btn btn-outline-success" type="Login">Login</button>
-          </form>
+
+      <li class="nav-item">
+        <a routerLink="/CV" routerLinkActive="active" class="nav-link">CV</a>
+      </li>
+
+    </ul>
+
+    <!-- Profile dropdown -->
+    <div dropdown class="dropdown">
+
+      <button
+        dropdownToggle
+        type="button"
+        class="btn btn-outline-light dropdown-toggle">
+
+        <i class="fa fa-user me-2"></i>
+
+        @if(accountService.currentUser()) {
+          {{accountService.currentUser()?.username | titlecase}}
+        } @else {
+          Profile
         }
-       
+
+      </button>
+
+      <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+
+        @if(accountService.currentUser()) {
+
+          <a class="dropdown-item" routerLink="/profile">
+            <i class="fa fa-user me-2"></i> Edit Profile
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <a class="dropdown-item" (click)="logout()" role="button">
+            <i class="fa fa-sign-out me-2"></i> Log Out
+          </a>
+
+        } @else {
+
+          <div class="px-3 py-2" style="min-width: 250px;">
+
+            <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
+
+              <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input
+                  name="username"
+                  [(ngModel)]="model.username"
+                  class="form-control"
+                  placeholder="Username"
+                  required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input
+                  name="password"
+                  [(ngModel)]="model.password"
+                  class="form-control"
+                  placeholder="Password"
+                  type="password"
+                  required>
+              </div>
+
+              <button
+                class="btn btn-primary w-100"
+                type="submit"
+                [disabled]="!loginForm.valid">
+                Login
+              </button>
+
+            </form>
+
+            <div class="dropdown-divider"></div>
+
+            <a class="dropdown-item" routerLink="/register">
+              <i class="fa fa-user-plus me-2"></i> Register
+            </a>
+
+          </div>
+
+        }
+
       </div>
-  </nav>
+    </div>
+
+  </div>
+</nav>
+```
