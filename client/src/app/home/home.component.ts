@@ -9,11 +9,10 @@ import { throwError, TimeoutError } from 'rxjs';
 import { timeout, catchError, finalize,retry } from 'rxjs/operators';
 import { delay } from 'rxjs/operators'; // Import the operator
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [RegisterComponent, ChessHostComponent, CommonModule,MatProgressSpinnerModule],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    imports: [RegisterComponent, ChessHostComponent, CommonModule, MatProgressSpinnerModule],
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
   http = inject(HttpClient);

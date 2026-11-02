@@ -8,11 +8,10 @@ import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop
 import { ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 //import {chessBoardService } from 'src\app\board-component\board-component.service.ts'
 @Component({
-  selector: 'ChessboardComponent',
-  standalone: true,
-  imports: [CommonModule, ScoreBarComponent, DragDropModule /*, FormsModule, ...*/],
-  templateUrl: './board-component.component.html',
-  styleUrls: ['./board-component.component.css']
+    selector: 'ChessboardComponent',
+    imports: [CommonModule, ScoreBarComponent, DragDropModule /*, FormsModule, ...*/],
+    templateUrl: './board-component.component.html',
+    styleUrls: ['./board-component.component.css']
 })
 
 

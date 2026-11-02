@@ -9,12 +9,11 @@ import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChang
 import { BaseComponent } from '../../../app/base/base.component';
 
 @Component({
-  selector: 'app-chess-host',
-  standalone: true,
-  // include both standalone child components here so Angular can create them
-  imports: [CommonModule,ChessboardComponent, ComputerModeComponent,ReactiveFormsModule],
-  templateUrl: './chess-host.component.html',
-  styleUrls: ['./chess-host.component.css']
+    selector: 'app-chess-host',
+    // include both standalone child components here so Angular can create them
+    imports: [CommonModule, ChessboardComponent, ComputerModeComponent, ReactiveFormsModule],
+    templateUrl: './chess-host.component.html',
+    styleUrls: ['./chess-host.component.css']
 })
 export class ChessHostComponent extends BaseComponent {
   // expose the Types as public properties so the template can reference them
