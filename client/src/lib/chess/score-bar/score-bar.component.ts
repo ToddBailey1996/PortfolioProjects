@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AsyncPipe,CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChessboardService } from '../board-component/chessboard.service';
 @Component({
     selector: 'score-bar',

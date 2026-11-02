@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountsService } from '../_services/accounts.service';
-import { NgIf, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'app-nav',
-    imports: [FormsModule, NgIf, BsDropdownModule, RouterLink, RouterLinkActive, TitleCasePipe],
+    imports: [FormsModule, BsDropdownModule, RouterLink, RouterLinkActive, TitleCasePipe],
     templateUrl: './nav.component.html',
     styleUrl: './nav.component.css'
 })
