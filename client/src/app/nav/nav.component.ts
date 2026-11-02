@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountsService } from '../_services/accounts.service';
 import { TitleCasePipe } from '@angular/common';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+//import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'app-nav',
-    imports: [FormsModule, BsDropdownModule, RouterLink, RouterLinkActive, TitleCasePipe],
+    imports: [FormsModule, RouterLink, RouterLinkActive, TitleCasePipe],
     templateUrl: './nav.component.html',
     styleUrl: './nav.component.css'
 })
@@ -16,7 +16,7 @@ export class NavComponent {
   private router = inject(Router);
   private toastr = inject(ToastrService);
   model: any = {};
-
+  profileMenuOpen = false;
   login(){
     this.accountService.login(this.model).subscribe({
       next: (user) => {
@@ -32,5 +32,14 @@ export class NavComponent {
     this.accountService.logout();
     this.router.navigateByUrl('/')
   }
+  
+
+toggleProfileMenu() {
+  this.profileMenuOpen = !this.profileMenuOpen;
+}
+
+closeProfileMenu() {
+  this.profileMenuOpen = false;
+}
 }
  
