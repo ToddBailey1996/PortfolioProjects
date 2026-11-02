@@ -1,14 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountsService } from '../_services/accounts.service';
 import { TitleCasePipe } from '@angular/common';
 //import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@openng/ngx-toastr';
 @Component({
     selector: 'app-nav',
     imports: [FormsModule, RouterLink, RouterLinkActive, TitleCasePipe],
     templateUrl: './nav.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './nav.component.css'
 })
 export class NavComponent {

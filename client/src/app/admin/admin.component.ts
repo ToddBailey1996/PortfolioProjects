@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { UsersCrudDto } from '../_models/UsersCrudDto';
 import { AdminService } from '../_services/Admin.service';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { ProjectCrudDto } from '../_models/ProjectCrudDto';
     selector: 'app-admin',
     imports: [CommonModule, FormsModule, MatTabsModule],
     templateUrl: './admin.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./admin.component.css']
 })
 export class AdminComponent {

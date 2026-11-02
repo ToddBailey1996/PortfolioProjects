@@ -41,7 +41,7 @@
         <i class="fa fa-user me-2"></i>
 
         @if(accountService.currentUser()) {
-          {{accountService.currentUser()?.username | titlecase}}
+          {{$safeNavigationMigration(accountService.currentUser()?.username) | titlecase}}
         } @else {
           Profile
         }

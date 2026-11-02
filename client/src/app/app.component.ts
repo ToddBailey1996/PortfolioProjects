@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavComponent } from "./nav/nav.component";
 import { AccountsService } from './_services/accounts.service';
@@ -8,6 +8,7 @@ import { AccountsService } from './_services/accounts.service';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterOutlet, NavComponent]
 })
 export class AppComponent implements OnInit{

@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 @Component({
     selector: 'app-test-errors',
     imports: [],
     templateUrl: './test-errors.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './test-errors.component.css'
 })
 export class TestErrorsComponent {

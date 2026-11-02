@@ -1,4 +1,4 @@
-import { Component, OnInit ,Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChessBoard } from '../chess-logic/chessBoard';
 import { CheckState, Color, Coords, FENChar, pieceImagePaths, SafeSquares, SelectedSquare, LastMove} from '../chess-logic/models';
@@ -11,6 +11,7 @@ import { ViewChildren, QueryList, AfterViewInit } from '@angular/core';
     selector: 'ChessboardComponent',
     imports: [CommonModule, ScoreBarComponent, DragDropModule /*, FormsModule, ...*/],
     templateUrl: './board-component.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./board-component.component.css']
 })
 

@@ -1,4 +1,4 @@
-import { Component, inject,  Input,  OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChessBoard } from '../chess-logic/chessBoard';
 import { ChessboardComponent } from '../board-component/board-component.component';
@@ -12,6 +12,7 @@ import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
     selector: 'app-computer-mode',
     imports: [CommonModule, ScoreBarComponent, DragDropModule /*, FormsModule, ...*/],
     templateUrl: '../board-component/board-component.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['../board-component/board-component.component.css']
 })
 export class ComputerModeComponent extends ChessboardComponent implements OnInit{

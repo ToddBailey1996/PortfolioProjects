@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RegisterComponent } from "../register/register.component";
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -12,6 +12,7 @@ import { delay } from 'rxjs/operators'; // Import the operator
     selector: 'app-home',
     imports: [RegisterComponent, ChessHostComponent, CommonModule, MatProgressSpinnerModule],
     templateUrl: './home.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{

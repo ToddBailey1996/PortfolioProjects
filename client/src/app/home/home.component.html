@@ -147,7 +147,7 @@
         <!-- Project Description -->
         <div
           class="project-html"
-          [innerHTML]="selectedProject?.description">
+          [innerHTML]="$safeNavigationMigration(selectedProject?.description)">
         </div>
       </div>
     </div>

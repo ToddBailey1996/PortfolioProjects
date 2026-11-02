@@ -1,4 +1,4 @@
-import { Component, Type } from '@angular/core';
+import { Component, Type, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChessboardComponent } from '../board-component/board-component.component';
 import { ComputerModeComponent } from '../computer-mode/computer-mode.component';
@@ -13,6 +13,7 @@ import { BaseComponent } from '../../../app/base/base.component';
     // include both standalone child components here so Angular can create them
     imports: [CommonModule, ChessboardComponent, ComputerModeComponent, ReactiveFormsModule],
     templateUrl: './chess-host.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./chess-host.component.css']
 })
 export class ChessHostComponent extends BaseComponent {
