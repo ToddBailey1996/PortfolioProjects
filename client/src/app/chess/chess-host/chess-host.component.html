@@ -1,0 +1,80 @@
+@if (showForm) {
+  <div class="game-config-wrapper">
+    <form class="game-card" [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="game-header">
+        <div class="chess-icon">♟</div>
+        <h2>New Game</h2>
+        <p>Configure your match before you play.</p>
+      </div>
+
+      <div class="form-section">
+        <label class="section-label">Choose your opponent</label>
+
+        <div class="player-options">
+
+          <label class="player-option"
+                 [class.selected]="form.get('player')?.value === 'computer'">
+
+            <input type="radio"
+                   value="computer"
+                   formControlName="player">
+
+            <span class="player-icon">🤖</span>
+            <span class="player-name">Computer</span>
+            <span class="player-description">Play against AI</span>
+          </label>
+
+          <label class="player-option"
+                 [class.selected]="form.get('player')?.value === 'human'">
+
+            <input type="radio"
+                   value="human"
+                   formControlName="player">
+
+            <span class="player-icon">👥</span>
+            <span class="player-name">Human</span>
+            <span class="player-description">Play against a friend</span>
+          </label>
+
+        </div>
+      </div>
+
+      @if (form.get('player')?.value === 'computer') {
+        <div class="form-section depth-section">
+          <label for="searchDepth" class="section-label">
+            AI Difficulty
+          </label>
+
+          <div class="depth-control">
+            <input
+              id="searchDepth"
+              type="range"
+              formControlName="searchDepth"
+              min="1"
+              max="3"
+              step="1">
+
+            <div class="depth-labels">
+              <span>Easy</span>
+              <span>Medium</span>
+              <span>Hard</span>
+            </div>
+          </div>
+        </div>
+      }
+
+      <button type="submit"
+              class="create-game-btn"
+              [disabled]="form.invalid">
+        Create Game
+        <span>→</span>
+      </button>
+
+    </form>
+  </div>
+}
+
+@if (!showForm) {
+  <ng-container *ngComponentOutlet="current; inputs: dynamicInputs"></ng-container>
+}

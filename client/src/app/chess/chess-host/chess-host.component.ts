@@ -6,7 +6,7 @@ import { ComputerModeComponent } from '../computer-mode/computer-mode.component'
 import { FormBuilder, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
-import { BaseComponent } from '../../../app/base/base.component';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
     selector: 'app-chess-host',

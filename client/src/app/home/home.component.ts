@@ -2,7 +2,7 @@ import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/cor
 import { RegisterComponent } from "../register/register.component";
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { ChessHostComponent } from "../../lib/chess/chess-host/chess-host.component";
+import { ChessHostComponent } from "../chess/chess-host/chess-host.component";
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { throwError, TimeoutError } from 'rxjs';

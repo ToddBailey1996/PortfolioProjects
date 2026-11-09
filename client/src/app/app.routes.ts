@@ -9,8 +9,8 @@ import { authGuard } from './_guards/auth.guard';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
-import { ChessboardComponent} from '../lib/chess/board-component/board-component.component';
-import { ChessHostComponent } from '../lib/chess/chess-host/chess-host.component';
+import { ChessboardComponent} from './chess/board-component/board-component.component';
+import { ChessHostComponent } from './chess/chess-host/chess-host.component';
 import { AdminComponent } from '../app/admin/admin.component';
 
 export const routes: Routes = [
