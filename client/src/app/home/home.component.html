@@ -2,8 +2,8 @@
 <div class="container mt-5">
 
   <!-- =========================================
-       Introduction
-       ========================================= -->
+  Introduction
+  ========================================= -->
 
   <section class="portfolio-intro text-center">
 
@@ -42,163 +42,116 @@
 
 
   <!-- =========================================
-       Projects
-       ========================================= -->
+  Projects
+  ========================================= -->
 
   <section class="projects-section">
 
-    <div *ngIf="!isLoading; else loader">
-
-      <div class="section-heading">
-        <h2>Projects</h2>
-
-        <p>
-          A selection of my development projects and technical work.
-        </p>
-      </div>
-
-
-      <!-- Project List -->
-
-      <div class="panel-list">
-
-        <div
-          class="panel"
-          *ngFor="let project of visibleProjects">
-
-          <!-- Project Header -->
-
-          <div class="project-header">
-
-            <div>
-              <h3>{{ project.title }}</h3>
-            </div>
-
-            <button
-              type="button"
-              class="btn btn-primary"
-              (click)="OpenModal(project)">
-
-              About Project
-
-            </button>
-
-          </div>
-
-
-          <!-- Project Component -->
-
-          <div class="project-preview">
-
-            <ng-container
-              *ngComponentOutlet="project.component">
-            </ng-container>
-
-          </div>
-
-
-          <!-- Technologies -->
-
-          <ul class="tag-list">
-
-            <li
-              *ngFor="let tech of project.techList.split(',')"
-              class="tag">
-
-              {{ tech.trim() }}
-
-            </li>
-
-          </ul>
-
+    @if (!isLoading) {
+      <div>
+        <div class="section-heading">
+          <h2>Projects</h2>
+          <p>
+            A selection of my development projects and technical work.
+          </p>
         </div>
-
+        <!-- Project List -->
+        <div class="panel-list">
+          @for (project of visibleProjects; track project) {
+            <div
+              class="panel"
+              >
+              <!-- Project Header -->
+              <div class="project-header">
+                <div>
+                  <h3>{{ project.title }}</h3>
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="OpenModal(project)">
+                  About Project
+                </button>
+              </div>
+              <!-- Project Component -->
+              <div class="project-preview">
+                <ng-container
+                  *ngComponentOutlet="project.component">
+                </ng-container>
+              </div>
+              <!-- Technologies -->
+              <ul class="tag-list">
+                @for (tech of project.techList.split(','); track tech) {
+                  <li
+                    class="tag">
+                    {{ tech.trim() }}
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
       </div>
-
-    </div>
-
-
-    <!-- =========================================
-         Loading State
-         ========================================= -->
-
-    <ng-template #loader>
-
+    } @else {
       <div class="spinner-wrapper">
-
         <mat-spinner
           diameter="50"
           color="primary">
         </mat-spinner>
-
         <div class="loading-text">
-
           <strong>Fetching projects...</strong>
-
           <span>
             The API may be starting from an idle state.
           </span>
-
         </div>
-
       </div>
+    }
 
-    </ng-template>
+
+    <!-- =========================================
+    Loading State
+    ========================================= -->
+
 
   </section>
 
 
   <!-- =========================================
-       Project Details Modal
-       ========================================= -->
+  Project Details Modal
+  ========================================= -->
 
-  <div
-    class="modal"
-    *ngIf="isModalOpen"
-    (click)="closeModal()">
-
+  @if (isModalOpen) {
     <div
-      class="modal-content"
-      (click)="$event.stopPropagation()">
-
-      <!-- Close -->
-
-      <button
-        type="button"
-        class="close"
-        aria-label="Close project details"
-        (click)="closeModal()">
-
-        &times;
-
-      </button>
-
-
-      <!-- Modal Header -->
-
-      <div class="modal-header">
-
-        <span class="modal-label">
-          Project Details
-        </span>
-
-        <h2>
-          {{ selectedProject?.title }}
-        </h2>
-
-      </div>
-
-
-      <!-- Project Description -->
-
+      class="modal"
+      (click)="closeModal()">
       <div
-        class="project-html"
-        [innerHTML]="selectedProject?.description">
+        class="modal-content"
+        (click)="$event.stopPropagation()">
+        <!-- Close -->
+        <button
+          type="button"
+          class="close"
+          aria-label="Close project details"
+          (click)="closeModal()">
+          &times;
+        </button>
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <span class="modal-label">
+            Project Details
+          </span>
+          <h2>
+            {{ selectedProject?.title }}
+          </h2>
+        </div>
+        <!-- Project Description -->
+        <div
+          class="project-html"
+          [innerHTML]="$safeNavigationMigration(selectedProject?.description)">
+        </div>
       </div>
-
     </div>
-
-  </div>
+  }
 
 </div>
 

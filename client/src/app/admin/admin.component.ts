@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { UsersCrudDto } from '../_models/UsersCrudDto';
 import { AdminService } from '../_services/Admin.service';
 import { CommonModule } from '@angular/common';
@@ -6,11 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ProjectCrudDto } from '../_models/ProjectCrudDto';
 @Component({
-  selector: 'app-admin',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatTabsModule],
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+    selector: 'app-admin',
+    imports: [CommonModule, FormsModule, MatTabsModule],
+    templateUrl: './admin.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./admin.component.css']
 })
 export class AdminComponent {
   private adminService = inject(AdminService);

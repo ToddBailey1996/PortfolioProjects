@@ -1,12 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { AsyncPipe,CommonModule } from '@angular/common';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChessboardService } from '../board-component/chessboard.service';
 @Component({
-  selector: 'score-bar',
-  standalone: true,
-  imports: [CommonModule, AsyncPipe],
-  templateUrl: './score-bar.component.html',
-  styleUrls: ['./score-bar.component.css']
+    selector: 'score-bar',
+    imports: [CommonModule, AsyncPipe],
+    templateUrl: './score-bar.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./score-bar.component.css']
 })
 export class ScoreBarComponent {
 

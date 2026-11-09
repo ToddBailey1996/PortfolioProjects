@@ -1,19 +1,19 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RegisterComponent } from "../register/register.component";
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { ChessHostComponent } from "../../lib/chess/chess-host/chess-host.component";
+import { ChessHostComponent } from "../chess/chess-host/chess-host.component";
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { throwError, TimeoutError } from 'rxjs';
 import { timeout, catchError, finalize,retry } from 'rxjs/operators';
 import { delay } from 'rxjs/operators'; // Import the operator
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [RegisterComponent, ChessHostComponent, CommonModule,MatProgressSpinnerModule],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    imports: [RegisterComponent, ChessHostComponent, CommonModule, MatProgressSpinnerModule],
+    templateUrl: './home.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
   http = inject(HttpClient);

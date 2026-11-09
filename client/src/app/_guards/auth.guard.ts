@@ -1,7 +1,7 @@
 import { CanActivateFn } from '@angular/router';
 import { AccountsService } from '../_services/accounts.service';
 import { inject } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@openng/ngx-toastr';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const accountService = inject(AccountsService);

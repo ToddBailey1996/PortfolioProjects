@@ -1,4 +1,4 @@
-import { Component, Type } from '@angular/core';
+import { Component, Type, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChessboardComponent } from '../board-component/board-component.component';
 import { ComputerModeComponent } from '../computer-mode/computer-mode.component';
@@ -6,15 +6,15 @@ import { ComputerModeComponent } from '../computer-mode/computer-mode.component'
 import { FormBuilder, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
-import { BaseComponent } from '../../../app/base/base.component';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
-  selector: 'app-chess-host',
-  standalone: true,
-  // include both standalone child components here so Angular can create them
-  imports: [CommonModule,ChessboardComponent, ComputerModeComponent,ReactiveFormsModule],
-  templateUrl: './chess-host.component.html',
-  styleUrls: ['./chess-host.component.css']
+    selector: 'app-chess-host',
+    // include both standalone child components here so Angular can create them
+    imports: [CommonModule, ChessboardComponent, ComputerModeComponent, ReactiveFormsModule],
+    templateUrl: './chess-host.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./chess-host.component.css']
 })
 export class ChessHostComponent extends BaseComponent {
   // expose the Types as public properties so the template can reference them

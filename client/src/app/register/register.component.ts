@@ -1,14 +1,14 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountsService } from '../_services/accounts.service';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@openng/ngx-toastr';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+    selector: 'app-register',
+    imports: [FormsModule],
+    templateUrl: './register.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrl: './register.component.css'
 })
 export class RegisterComponent {
   private accountService = inject(AccountsService);

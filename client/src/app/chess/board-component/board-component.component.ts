@@ -1,4 +1,4 @@
-import { Component, OnInit ,Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChessBoard } from '../chess-logic/chessBoard';
 import { CheckState, Color, Coords, FENChar, pieceImagePaths, SafeSquares, SelectedSquare, LastMove} from '../chess-logic/models';
@@ -8,11 +8,11 @@ import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop
 import { ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 //import {chessBoardService } from 'src\app\board-component\board-component.service.ts'
 @Component({
-  selector: 'ChessboardComponent',
-  standalone: true,
-  imports: [CommonModule, ScoreBarComponent, DragDropModule /*, FormsModule, ...*/],
-  templateUrl: './board-component.component.html',
-  styleUrls: ['./board-component.component.css']
+    selector: 'ChessboardComponent',
+    imports: [CommonModule, ScoreBarComponent, DragDropModule /*, FormsModule, ...*/],
+    templateUrl: './board-component.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./board-component.component.css']
 })
 
 
