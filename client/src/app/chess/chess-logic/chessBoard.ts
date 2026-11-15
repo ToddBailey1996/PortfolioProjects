@@ -1,5 +1,5 @@
 import { FENConverter } from "./FENConverter";
-import { CheckState, Color, Coords, FENChar, LastMove, SafeSquares } from "./models";
+import { CheckState, Color, Coords, FENChar, LastMove, SafeSquares,GameMove } from "./models";
 import { Bishop } from "./pieces/Bishop";
 import { King } from "./pieces/king";
 import { Knight } from "./pieces/knight";
@@ -23,6 +23,7 @@ export class ChessBoard{
     private fullNumberOfMoves: number = 1;
     private _boardAsFEN: string = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     private FENConverter = new FENConverter();
+    private moveHistory: GameMove[] = [];
 
     constructor(){
     
@@ -265,7 +266,15 @@ export class ChessBoard{
         if(!pieceSafeSquares|| !pieceSafeSquares.find(coords => coords.x === newX && coords.y === newY)){
             throw new Error("Square is not safe");
         }
+        const capturedPiece = this.chessBoard[newX][newY];
 
+        this.recordMove({
+            from: { x: prevX, y: prevY },
+            to: { x: newX, y: newY },
+            piece: piece.FENChar,
+            ...(capturedPiece ? { captured: capturedPiece.FENChar } : {}),
+            ...(promotedPieceType ? { promotion: promotedPieceType } : {}),
+        });
         if((piece instanceof Pawn || piece instanceof King || piece instanceof Rook) && !piece.hasMoved){
             piece.hasMoved = true;
         }
@@ -382,5 +391,13 @@ export class ChessBoard{
             }
             this.threeFoldRepetitionDictionary.set(threeFoldRepetitionFENKey,2);
         }
+    }
+
+    private recordMove(move: GameMove): void {
+        this.moveHistory.push(move);
+    }
+
+    public get moves(): readonly GameMove[] {
+        return this.moveHistory;
     }
 }

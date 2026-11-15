@@ -65,7 +65,7 @@
       }
 
       <button type="submit"
-              class="create-game-btn"
+              class="game-btn"
               [disabled]="form.invalid">
         Create Game
         <span>→</span>
@@ -76,5 +76,11 @@
 }
 
 @if (!showForm) {
+   <button type="button" class="back-to-setup-btn" (click)="showForm = true">
+    Back to game setup
+  </button>
+  <button type="button" class="back-to-setup-btn" (click)="saveGame()">
+    Save Game
+  </button>
   <ng-container *ngComponentOutlet="current; inputs: dynamicInputs"></ng-container>
 }

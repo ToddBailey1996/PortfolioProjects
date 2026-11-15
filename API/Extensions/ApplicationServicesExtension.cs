@@ -2,6 +2,7 @@
 using API.Interfaces;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 namespace API.Extensions;
 
 public static class ApplicationServicesExtension
@@ -27,7 +28,11 @@ public static class ApplicationServicesExtension
         services.AddScoped<ITokenService,TokenService>();
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IUserService, UserService>();
-        Console.WriteLine("CONNECTION STRING = " + cs);
+        var mongoConnection = config.GetConnectionString("MongoDb")
+            ?? throw new InvalidOperationException("MongoDb connection string is missing.");
+
+        services.AddSingleton<IMongoClient>(_ => new MongoClient(mongoConnection));
+        services.AddScoped<IChessService, ChessService>();
         return services;
     }
 }

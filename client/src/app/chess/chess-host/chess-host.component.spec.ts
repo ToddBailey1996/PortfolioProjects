@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChessHostComponent } from './chess-host.component';
+import { GameSaveService } from '../../_services/game-save.service';
 
 describe('ChessHostComponent', () => {
   let component: ChessHostComponent;
@@ -8,7 +9,8 @@ describe('ChessHostComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChessHostComponent]
+      imports: [ChessHostComponent],
+      providers: [GameSaveService]
     })
     .compileComponents();
     
