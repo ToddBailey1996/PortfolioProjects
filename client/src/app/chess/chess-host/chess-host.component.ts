@@ -7,11 +7,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
 import { BaseComponent } from '../../base/base.component';
-
+import { GameSaveService } from '../../_services/game-save.service';
 @Component({
     selector: 'app-chess-host',
     // include both standalone child components here so Angular can create them
-    imports: [CommonModule, ChessboardComponent, ComputerModeComponent, ReactiveFormsModule],
+    imports: [CommonModule, ReactiveFormsModule],
     templateUrl: './chess-host.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./chess-host.component.css']
@@ -41,7 +41,7 @@ export class ChessHostComponent extends BaseComponent {
     computer: ComputerModeComponent,
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,  private gameSaveService: GameSaveService) {
     
     super();
     this.current = this.componentMap['human'];
@@ -82,4 +82,20 @@ export class ChessHostComponent extends BaseComponent {
       this.showForm = false; // ✅ hide form, show board
     }
   }
+  saveGame(): void {
+  this.gameSaveService.saveCurrentGame().subscribe({
+    next: saved => {
+      if (!saved) {
+        alert('There is no game to save yet.');
+        return;
+      }
+
+      alert('Game saved to your account.');
+    },
+    error: err => {
+      console.error('Could not save game', err);
+      alert('Could not save the game. Please try again.');
+    }
+  });
+}
 }

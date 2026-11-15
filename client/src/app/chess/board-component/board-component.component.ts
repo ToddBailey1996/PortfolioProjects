@@ -1,15 +1,15 @@
-import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChessBoard } from '../chess-logic/chessBoard';
 import { CheckState, Color, Coords, FENChar, pieceImagePaths, SafeSquares, SelectedSquare, LastMove} from '../chess-logic/models';
 import { ChessboardService } from './chessboard.service';
-import { ScoreBarComponent } from '../score-bar/score-bar.component';
 import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
 import { ViewChildren, QueryList, AfterViewInit } from '@angular/core';
+import { GameSaveService } from '../../_services/game-save.service';
 //import {chessBoardService } from 'src\app\board-component\board-component.service.ts'
 @Component({
     selector: 'ChessboardComponent',
-    imports: [CommonModule, ScoreBarComponent, DragDropModule /*, FormsModule, ...*/],
+    imports: [CommonModule, DragDropModule /*, FormsModule, ...*/],
     templateUrl: './board-component.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./board-component.component.css']
@@ -39,6 +39,8 @@ private promotedPiece: FENChar|null = null;
 public capturedPiecesBlack: FENChar[] = [];
 public capturedPiecesWhite: FENChar[] = [];
 public allSquareIds: string[] = [];
+gameSaveService = inject(GameSaveService);
+
 //@ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
 
 /*get allDropLists(): CdkDropList[] {
@@ -55,7 +57,10 @@ constructor(protected chessBoardService: ChessboardService) {
       this.allSquareIds.push(`${i}-${j}`);
     }
   }
-
+  this.gameSaveService.updateCurrentGame(
+    this.chessBoard.boardAsFEN,
+    this.chessBoard.moves
+  );
 }
 trackBySquare(index: number, item: any): string {
   return index.toString(); 
@@ -163,7 +168,10 @@ public promotionPieces(): FENChar[]{
   }
   protected updateBoard(prevX: number, prevY: number, newX: number, newY: number, promotedPiece: FENChar | null):void{
     this.chessBoard.move(prevX,prevY,newX,newY,this.promotedPiece);
-
+    this.gameSaveService.updateCurrentGame(
+      this.chessBoard.boardAsFEN,
+      this.chessBoard.moves
+    );
     this._boardView = this.chessBoard.chessBoardView;
     this.checkState = this.chessBoard.checkState;
     this.lastMove = this.chessBoard.lastMove;

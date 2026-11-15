@@ -75,3 +75,12 @@ type kingNotChecked = {
 export type CheckState = kingChecked| kingNotChecked;
 
 export const columns = ["a", "b" ,"c", "d" ,"e", "f","g", "h"];
+
+export interface GameMove {
+  from: Coords;
+  to: Coords;
+  piece: FENChar;
+  captured?: FENChar;
+  promotion?: FENChar;
+}
+

@@ -5,12 +5,11 @@ import { ChessboardComponent } from '../board-component/board-component.componen
 import { MychessAIService } from './myChessAI.service';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { ChessboardService } from '../board-component/chessboard.service';
-import { ScoreBarComponent } from '../score-bar/score-bar.component';
 //import { ChessboardService } from './chessboard.service';
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 @Component({
     selector: 'app-computer-mode',
-    imports: [CommonModule, ScoreBarComponent, DragDropModule /*, FormsModule, ...*/],
+    imports: [CommonModule, DragDropModule /*, FormsModule, ...*/],
     templateUrl: '../board-component/board-component.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['../board-component/board-component.component.css']

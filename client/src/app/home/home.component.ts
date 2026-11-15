@@ -10,7 +10,7 @@ import { timeout, catchError, finalize,retry } from 'rxjs/operators';
 import { delay } from 'rxjs/operators'; // Import the operator
 @Component({
     selector: 'app-home',
-    imports: [RegisterComponent, ChessHostComponent, CommonModule, MatProgressSpinnerModule],
+    imports: [CommonModule, MatProgressSpinnerModule],
     templateUrl: './home.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./home.component.css']
