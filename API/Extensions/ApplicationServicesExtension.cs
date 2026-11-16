@@ -26,6 +26,7 @@ public static class ApplicationServicesExtension
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddScoped<ITokenService,TokenService>();
+        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IUserService, UserService>();
         var mongoConnection = config.GetConnectionString("MongoDb")
