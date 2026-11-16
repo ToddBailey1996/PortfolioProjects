@@ -1,5 +1,4 @@
 using API;
-using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
@@ -11,11 +10,11 @@ using System.Text;
 namespace API.Services;
 public class AuthService : IAuthService
 {
-    private readonly DataContext _context;
+    private readonly AppContext _context;
     private readonly ITokenService _tokenService;
 
     public AuthService(
-        DataContext context,
+        AppContext context,
         ITokenService tokenService)
     {
         _context = context;
